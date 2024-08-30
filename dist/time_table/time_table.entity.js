@@ -14,15 +14,11 @@ export let Time_table = class Time_table extends BaseEntity {
 __decorate([
     Property({ nullable: false }),
     __metadata("design:type", String)
-], Time_table.prototype, "day", void 0);
-__decorate([
-    Property({ nullable: false }),
-    __metadata("design:type", Number)
-], Time_table.prototype, "time", void 0);
+], Time_table.prototype, "day_time", void 0);
 __decorate([
     Property({ nullable: false }),
     __metadata("design:type", Boolean)
-], Time_table.prototype, "vigency", void 0);
+], Time_table.prototype, "vigDate", void 0);
 Time_table = __decorate([
     Entity()
 ], Time_table);

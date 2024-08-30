@@ -18,7 +18,7 @@ __decorate([
 __decorate([
     Property({ nullable: false }),
     __metadata("design:type", Number)
-], Consulting.prototype, "alt_street", void 0);
+], Consulting.prototype, "street_number", void 0);
 Consulting = __decorate([
     Entity()
 ], Consulting);

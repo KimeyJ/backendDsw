@@ -5,6 +5,7 @@ GET http://localhost:3000/api/specialty
 ### POST
 # @name createSpecialty
 POST http://localhost:3000/api/specialties
+
 Content-Type: application/json
 {
     "name": "Obstreta"

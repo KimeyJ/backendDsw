@@ -12,11 +12,12 @@ import {
 import { BaseEntity } from '../shared/baseEntity.entity.js';
 import { Specialty } from '../specialty/specialty.entity.js';
 import { Follow_up } from '../follow_up/follow_up.entity.js';
+import { Appointment } from '../appointment/appointment.entity.js';
 
 @Entity()
 export class User {
   @PrimaryKey()
-  dni!: string;
+  dni?: number;
 
   @Property({ nullable: false })
   firstName!: string;
@@ -45,6 +46,11 @@ export class User {
   @OneToMany(() => Follow_up, (follow_up) => follow_up.patient, {
     cascade: [Cascade.ALL],
   })
+  @OneToMany(() => Appointment, (appointment) => appointment.patient, {
+    cascade: [Cascade.ALL],
+  })
+  @OneToMany(() => Appointment, (appointment) => appointment.doctor, {
+    cascade: [Cascade.ALL],
+  })
   follow_up = new Collection<User>(this);
-  //appointments
 }

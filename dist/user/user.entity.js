@@ -7,17 +7,19 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { Entity, Property, Cascade, ManyToOne, OneToMany, Collection } from '@mikro-orm/core';
-import { BaseEntity } from '../shared/baseEntity.entity.js';
+import { Entity, Property, Cascade, ManyToOne, OneToMany, Collection, PrimaryKey, } from '@mikro-orm/core';
 import { Specialty } from '../specialty/specialty.entity.js';
 import { Follow_up } from '../follow_up/follow_up.entity.js';
-export let User = class User extends BaseEntity {
+export let User = class User {
     constructor() {
-        super(...arguments);
         this.follow_up = new Collection(this);
         //appointments
     }
 };
+__decorate([
+    PrimaryKey(),
+    __metadata("design:type", String)
+], User.prototype, "dni", void 0);
 __decorate([
     Property({ nullable: false }),
     __metadata("design:type", String)
@@ -52,7 +54,7 @@ __decorate([
 ], User.prototype, "specialty", void 0);
 __decorate([
     OneToMany(() => Follow_up, (follow_up) => follow_up.patient, {
-        cascade: [Cascade.ALL]
+        cascade: [Cascade.ALL],
     }),
     __metadata("design:type", Object)
 ], User.prototype, "follow_up", void 0);
