@@ -15,9 +15,10 @@ import { Follow_up } from '../follow_up/follow_up.entity.js';
 import { Appointment } from '../appointment/appointment.entity.js';
 
 @Entity()
-export class User {
-  @PrimaryKey()
-  dni?: number;
+export class User extends BaseEntity {
+  
+  @Property({ nullable: false, unique: true})
+  dni!: number;
 
   @Property({ nullable: false })
   firstName!: string;
@@ -34,7 +35,7 @@ export class User {
   @Property({ nullable: false })
   age!: number;
 
-  @Property({ nullable: true })
+  @Property({ nullable: true, unique: true })
   tuition_number!: number;
 
   @Property({ nullable: false })

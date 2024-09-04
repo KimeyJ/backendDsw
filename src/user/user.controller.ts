@@ -6,7 +6,7 @@ const em = orm.em;
 
 function sanitizeUserInput(req: Request, res: Response, next: NextFunction) {
   req.body.sanitizedInput = {
-    id: req.body.dni,
+    id: req.body.id,
     firstName: req.body.firstName,
     lastName: req.body.lastName,
     email: req.body.email,
@@ -37,8 +37,8 @@ async function findAll(req: Request, res: Response) {
 
 async function findOne(req: Request, res: Response) {
   try {
-    const dni = Number.parseInt(req.params.dni);
-    const user = await em.findOneOrFail(User, { dni });
+    const id = Number.parseInt(req.params.id);
+    const user = await em.findOneOrFail(User, { id });
     res.status(200).json({ message: 'found user', data: user });
   } catch (error: any) {
     res.status(500).json({ message: error.message });
@@ -57,9 +57,9 @@ async function add(req: Request, res: Response) {
 
 async function update(req: Request, res: Response) {
   try {
-    const dni = Number.parseInt(req.params.dni);
+    const id = Number.parseInt(req.params.id);
     const userToUpdate = await em.findOneOrFail(User, {
-      dni,
+      id,
     });
     em.assign(userToUpdate, req.body.sanitizedInput);
     await em.flush();
@@ -69,17 +69,16 @@ async function update(req: Request, res: Response) {
   }
 }
 
-/*async function remove(req: Request, res: Response) {
+async function remove(req: Request, res: Response) {
   try {
-    const dni = Number.parseInt(req.params.dni);
-    const user = em.getReference(User, dni); //error de tipo de dato dni //
+    const id = Number.parseInt(req.params.id);
+    const user = em.getReference(User, id);
     await em.removeAndFlush(user);
-    res.status(200).json({ message: 'Price deleted' });
+    res.status(200).json({ message: 'User deleted' });
   } catch (error: any) {
     res.status(500).json({ message: error.message });
   }
-}*/
+}
 
-// --- Preguntar al profe
 
-export { sanitizeUserInput, findAll, findOne, add, update /*remove*/ };
+export { sanitizeUserInput, findAll, findOne, add, update, remove };
