@@ -11,7 +11,9 @@ function sanitizeSpecialtyPriceInput(
 ) {
   req.body.sanitizedInput = {
     id: req.body.id,
-    name: req.body.name,
+    vigDate: req.body.vigDate,
+    cost: req.body.cost,
+    specialty: req.body.specialty,
   };
 
   Object.keys(req.body.sanitizedInput).forEach((key) => {
@@ -25,7 +27,13 @@ function sanitizeSpecialtyPriceInput(
 
 async function findAll(req: Request, res: Response) {
   try {
-    const specialty_prices = await em.find(Specialty_price, {});
+    const specialty_prices = await em.find(
+      Specialty_price,
+      {},
+      {
+        populate: ['specialty'],
+      }
+    );
     res
       .status(200)
       .json({ message: 'Found all prices', data: specialty_prices });
@@ -37,7 +45,13 @@ async function findAll(req: Request, res: Response) {
 async function findOne(req: Request, res: Response) {
   try {
     const id = Number.parseInt(req.params.id);
-    const specialty_prices = await em.find(Specialty_price, { id });
+    const specialty_prices = await em.find(
+      Specialty_price,
+      { id },
+      {
+        populate: ['specialty'],
+      }
+    );
     res.status(200).json({ message: 'Found price', data: specialty_prices });
   } catch (error: any) {
     res.status(500).json({ message: error.message });

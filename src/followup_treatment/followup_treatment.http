@@ -1,0 +1,29 @@
+### Get all
+GET http://localhost:3000/api/followup_treatments
+
+### Create one
+# @name createOne
+POST http://localhost:3000/api/followup_treatments
+Content-Type: application/json
+
+{
+    "follow": 2,
+    "treatment": 2
+}
+
+### ID
+@id = {{createOne.response.body.data.id}}
+
+### Get one
+GET http://localhost:3000/api/followup_treatments/{{id}}
+
+### Update one
+PUT http://localhost:3000/api/followup_treatments/{{id}}
+Content-Type: application/json
+
+{
+    "treatment": 3
+}
+
+### Delete one
+DELETE http://localhost:3000/api/followup_treatments/{{id}}

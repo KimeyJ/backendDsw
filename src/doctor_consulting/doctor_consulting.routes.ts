@@ -8,11 +8,11 @@ import {
   remove,
 } from './doctor_consulting.controller.js';
 
-export const appointmentRouter = Router();
+export const doctor_consultingRouter = Router();
 
-appointmentRouter.get('/', findAll);
-appointmentRouter.get('/:id', findOne);
-appointmentRouter.post('/', sanitizeDoctorConsultingInput, add);
-appointmentRouter.put('/:id', sanitizeDoctorConsultingInput, update);
-appointmentRouter.patch('/:id', sanitizeDoctorConsultingInput, update);
-appointmentRouter.delete('/:id', remove);
+doctor_consultingRouter.get('/', findAll);
+doctor_consultingRouter.get('/:id', findOne);
+doctor_consultingRouter.post('/', sanitizeDoctorConsultingInput, add);
+doctor_consultingRouter.put('/:id', sanitizeDoctorConsultingInput, update);
+doctor_consultingRouter.patch('/:id', sanitizeDoctorConsultingInput, update);
+doctor_consultingRouter.delete('/:id', remove);

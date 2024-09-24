@@ -1,23 +1,26 @@
 ### Get all the treatments
-# @name createTreatment
+GET http://localhost:3000/api/treatments
 
-GET http://localhost:3000/api/treatment
-
-### Get one treatment
-GET http://localhost:3000/api/treatment/001
 
 ### Create a treatments
-POST http://localhost:3000/api/treatment
+# @name createTreatment
+POST http://localhost:3000/api/treatments
 Content-Type: application/json
 
 {
-    "id": "002",
     "name": "Radiografia",
     "description": "toma imágenes de las estructuras internas del cuerpo"
 }
 
+### ID
+@id = {{createTreatment.response.body.data.id}}
+
+### Get one treatment
+GET http://localhost:3000/api/treatments/{{id}}
+
+
 ### Update a treatment
-PUT http://localhost:3000/api/treatment/002
+PUT http://localhost:3000/api/treatments/{{id}}
 Content-Type: application/json
 
 {
@@ -26,4 +29,4 @@ Content-Type: application/json
 }
 
 ### Delete a tratment
-DELETE http://localhost:3000/api/treatment/002
+DELETE http://localhost:3000/api/treatments/{{id}}

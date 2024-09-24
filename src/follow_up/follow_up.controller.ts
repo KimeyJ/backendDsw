@@ -11,7 +11,10 @@ function sanitizeFollowupInput(
 ) {
   req.body.sanitizedInput = {
     id: req.body.id,
-    name: req.body.name,
+    fdate: req.body.fdate,
+    observations: req.body.observations,
+    patient: req.body.patient,
+    treatments: req.body.treatments,
   };
 
   Object.keys(req.body.sanitizedInput).forEach((key) => {
@@ -25,7 +28,13 @@ function sanitizeFollowupInput(
 
 async function findAll(req: Request, res: Response) {
   try {
-    const follow_ups = await em.find(Follow_up, {});
+    const follow_ups = await em.find(
+      Follow_up,
+      {},
+      {
+        populate: ['patient'],
+      }
+    );
     res.status(200).json({ message: 'Found all follows', data: follow_ups });
   } catch (error: any) {
     res.status(500).json({ message: error.message });
@@ -35,7 +44,11 @@ async function findAll(req: Request, res: Response) {
 async function findOne(req: Request, res: Response) {
   try {
     const id = Number.parseInt(req.params.id);
-    const follow_ups = await em.find(Follow_up, { id });
+    const follow_ups = await em.find(
+      Follow_up,
+      { id },
+      { populate: ['patient'] }
+    );
     res.status(200).json({ message: 'Found follow', data: follow_ups });
   } catch (error: any) {
     res.status(500).json({ message: error.message });

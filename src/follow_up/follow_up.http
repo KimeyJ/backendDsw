@@ -1,0 +1,30 @@
+### Get all follow ups
+GET http://localhost:3000/api/follow_ups
+
+### Create one follow up
+# @name createFollowUp
+POST http://localhost:3000/api/follow_ups
+Content-Type: application/json
+
+{
+    "fdate": "{{$datetime rfc1123}}",
+    "observations": "Se murio, RIP, F en el chat",
+    "patient": 2
+}
+
+### ID
+@id = {{createFollowUp.response.body.data.id}}
+
+### Get one follow up
+GET http://localhost:3000/api/follow_ups/{{id}}
+
+### Update a follow up
+PUT http://localhost:3000/api/follow_ups/{{id}}
+Content-Type: application/json
+
+{
+    "observations": "Revivio"
+}
+
+### Delete a follow up
+DELETE http://localhost:3000/api/follow_ups/{{id}}

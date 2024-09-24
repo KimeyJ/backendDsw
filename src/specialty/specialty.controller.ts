@@ -12,6 +12,8 @@ function sanitizeSpecialtyInput(
   req.body.sanitizedInput = {
     id: req.body.id,
     name: req.body.name,
+    doctors: req.body.doctors,
+    prices: req.body.prices,
   };
 
   Object.keys(req.body.sanitizedInput).forEach((key) => {
@@ -25,24 +27,36 @@ function sanitizeSpecialtyInput(
 
 async function findAll(req: Request, res: Response) {
   try {
-    const specialties = await em.find(Specialty, {});
-    res.status(200).json({message : 'Found all specialties', data: specialties})
+    const specialties = await em.find(
+      Specialty,
+      {},
+      {
+        populate: ['doctors', 'prices'],
+      }
+    );
+    res
+      .status(200)
+      .json({ message: 'Found all specialties', data: specialties });
   } catch (error: any) {
-    res.status(500).json({message: error.message})
+    res.status(500).json({ message: error.message });
   }
 }
 
 async function findOne(req: Request, res: Response) {
   try {
     const id = Number.parseInt(req.params.id);
-    const speacialty = await em.find(Specialty, {id});
-    res.status(200).json({message : 'Found speacialty', data: speacialty})
+    const speacialty = await em.find(
+      Specialty,
+      { id },
+      { populate: ['doctors', 'prices'] }
+    );
+    res.status(200).json({ message: 'Found speacialty', data: speacialty });
   } catch (error: any) {
-    res.status(500).json({message: error.message})
+    res.status(500).json({ message: error.message });
   }
 }
 
-async function add (req: Request, res: Response) {
+async function add(req: Request, res: Response) {
   try {
     const specialty = em.create(Specialty, req.body.sanitizedInput);
     await em.flush();
@@ -58,13 +72,15 @@ async function update(req: Request, res: Response) {
     const SpecialtyToUpdate = await em.findOneOrFail(Specialty, { id });
     em.assign(SpecialtyToUpdate, req.body.sanitizedInput);
     await em.flush();
-    res.status(200).json({ message: 'Specialty updated', data: SpecialtyToUpdate });
+    res
+      .status(200)
+      .json({ message: 'Specialty updated', data: SpecialtyToUpdate });
   } catch (error: any) {
     res.status(500).json({ message: error.message });
   }
 }
 
-async function remove (req: Request, res: Response) {
+async function remove(req: Request, res: Response) {
   try {
     const id = Number.parseInt(req.params.id);
     const specialty = em.getReference(Specialty, id);
@@ -73,7 +89,6 @@ async function remove (req: Request, res: Response) {
   } catch (error: any) {
     res.status(500).json({ message: error.message });
   }
-  }
+}
 
-
-export { sanitizeSpecialtyInput, findAll, findOne, add, update, remove};
+export { sanitizeSpecialtyInput, findAll, findOne, add, update, remove };

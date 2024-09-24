@@ -25,7 +25,13 @@ function sanitizeFollowup_treatmentInput(
 }
 async function findAll(req: Request, res: Response) {
   try {
-    const followup_treatment = await em.find(Followup_treatment, {});
+    const followup_treatment = await em.find(
+      Followup_treatment,
+      {},
+      {
+        populate: ['treatment', 'follow'],
+      }
+    );
     res.status(200).json({
       message: 'found all followup and treatments (placeholder)',
       data: followup_treatment,
@@ -38,9 +44,15 @@ async function findAll(req: Request, res: Response) {
 async function findOne(req: Request, res: Response) {
   try {
     const id = Number.parseInt(req.params.id);
-    const followup_treatment = await em.findOneOrFail(Followup_treatment, {
-      id,
-    });
+    const followup_treatment = await em.findOneOrFail(
+      Followup_treatment,
+      {
+        id,
+      },
+      {
+        populate: ['treatment', 'follow'],
+      }
+    );
     res.status(200).json({
       message: 'found followup and treatment (placeholder)',
       data: followup_treatment,

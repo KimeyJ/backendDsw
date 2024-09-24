@@ -28,7 +28,13 @@ function sanitizeAppointmentInput(
 
 async function findAll(req: Request, res: Response) {
   try {
-    const appointments = await em.find(Appointment, {});
+    const appointments = await em.find(
+      Appointment,
+      {},
+      {
+        populate: ['doctor', 'patient'],
+      }
+    );
     res
       .status(200)
       .json({ message: 'Found all appointments', data: appointments });
@@ -40,7 +46,13 @@ async function findAll(req: Request, res: Response) {
 async function findOne(req: Request, res: Response) {
   try {
     const id = Number.parseInt(req.params.id);
-    const appointment = await em.find(Appointment, { id });
+    const appointment = await em.find(
+      Appointment,
+      { id },
+      {
+        populate: ['doctor', 'patient'],
+      }
+    );
     res.status(200).json({ message: 'Found appointment', data: appointment });
   } catch (error: any) {
     res.status(500).json({ message: error.message });

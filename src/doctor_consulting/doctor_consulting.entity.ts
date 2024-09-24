@@ -14,6 +14,8 @@ import { Time_table } from '../time_table/time_table.entity.js';
 
 @Entity()
 export class Doctor_consulting extends BaseEntity {
+  @Property()
+  vigency!: boolean;
   @ManyToOne(() => User, { nullable: false })
   doctor!: Rel<User>;
   @ManyToOne(() => Consulting, { nullable: false })

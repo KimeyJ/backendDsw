@@ -11,10 +11,10 @@ function sanitizeDoctorConsultingInput(
 ) {
   req.body.sanitizedInput = {
     id: req.body.id,
-    appoDate: req.body.appoDate,
-    assisted: req.body.assisted,
+    vigency: req.body.vigency,
     doctor: req.body.doctor,
-    patient: req.body.patient,
+    consulting: req.body.consulting,
+    time_tables: req.body.time_tables,
   };
 
   Object.keys(req.body.sanitizedInput).forEach((key) => {
@@ -28,7 +28,13 @@ function sanitizeDoctorConsultingInput(
 
 async function findAll(req: Request, res: Response) {
   try {
-    const doctor_consultings = await em.find(Doctor_consulting, {});
+    const doctor_consultings = await em.find(
+      Doctor_consulting,
+      {},
+      {
+        populate: ['doctor', 'consulting'],
+      }
+    );
     res.status(200).json({
       message: 'Found all doctor consultings',
       data: doctor_consultings,
@@ -41,7 +47,13 @@ async function findAll(req: Request, res: Response) {
 async function findOne(req: Request, res: Response) {
   try {
     const id = Number.parseInt(req.params.id);
-    const doctor_consultings = await em.find(Doctor_consulting, { id });
+    const doctor_consultings = await em.find(
+      Doctor_consulting,
+      { id },
+      {
+        populate: ['doctor', 'consulting'],
+      }
+    );
     res
       .status(200)
       .json({ message: 'Found doctor consulting', data: doctor_consultings });

@@ -7,17 +7,21 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { Entity, Property, Cascade, ManyToOne, OneToMany, Collection, PrimaryKey, } from '@mikro-orm/core';
+import { Entity, Property, Cascade, ManyToOne, OneToMany, Collection, } from '@mikro-orm/core';
+import { BaseEntity } from '../shared/baseEntity.entity.js';
 import { Specialty } from '../specialty/specialty.entity.js';
 import { Follow_up } from '../follow_up/follow_up.entity.js';
-export let User = class User {
+import { Appointment } from '../appointment/appointment.entity.js';
+import { Doctor_consulting } from '../doctor_consulting/doctor_consulting.entity.js';
+export let User = class User extends BaseEntity {
     constructor() {
+        super(...arguments);
         this.follow_up = new Collection(this);
-        //appointments
+        this.consultings = new Collection(this);
     }
 };
 __decorate([
-    PrimaryKey(),
+    Property({ nullable: false }),
     __metadata("design:type", String)
 ], User.prototype, "dni", void 0);
 __decorate([
@@ -49,15 +53,27 @@ __decorate([
     __metadata("design:type", Number)
 ], User.prototype, "cod_user", void 0);
 __decorate([
-    ManyToOne(() => Specialty, { nullable: false }),
+    ManyToOne(() => Specialty, { nullable: true }),
     __metadata("design:type", Object)
 ], User.prototype, "specialty", void 0);
 __decorate([
     OneToMany(() => Follow_up, (follow_up) => follow_up.patient, {
         cascade: [Cascade.ALL],
     }),
+    OneToMany(() => Appointment, (appointment) => appointment.patient, {
+        cascade: [Cascade.ALL],
+    }),
+    OneToMany(() => Appointment, (appointment) => appointment.doctor, {
+        cascade: [Cascade.ALL],
+    }),
     __metadata("design:type", Object)
 ], User.prototype, "follow_up", void 0);
+__decorate([
+    OneToMany(() => Doctor_consulting, (doctor_consulting) => doctor_consulting.doctor, {
+        cascade: [Cascade.ALL],
+    }),
+    __metadata("design:type", Object)
+], User.prototype, "consultings", void 0);
 User = __decorate([
     Entity()
 ], User);

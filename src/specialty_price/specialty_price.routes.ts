@@ -8,11 +8,11 @@ import {
   remove,
 } from './specialty_price.controller.js';
 
-export const appointmentRouter = Router();
+export const specialty_priceRouter = Router();
 
-appointmentRouter.get('/', findAll);
-appointmentRouter.get('/:id', findOne);
-appointmentRouter.post('/', sanitizeSpecialtyPriceInput, add);
-appointmentRouter.put('/:id', sanitizeSpecialtyPriceInput, update);
-appointmentRouter.patch('/:id', sanitizeSpecialtyPriceInput, update);
-appointmentRouter.delete('/:id', remove);
+specialty_priceRouter.get('/', findAll);
+specialty_priceRouter.get('/:id', findOne);
+specialty_priceRouter.post('/', sanitizeSpecialtyPriceInput, add);
+specialty_priceRouter.put('/:id', sanitizeSpecialtyPriceInput, update);
+specialty_priceRouter.patch('/:id', sanitizeSpecialtyPriceInput, update);
+specialty_priceRouter.delete('/:id', remove);

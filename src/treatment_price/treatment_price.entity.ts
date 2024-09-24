@@ -1,17 +1,15 @@
-import { Entity, ManyToOne, Property, Rel} from '@mikro-orm/core'
-import { Treatment } from '../treatment/treatment.entity.js'
-import { BaseEntity } from '../shared/baseEntity.entity.js'
+import { Entity, ManyToOne, Property, Rel } from '@mikro-orm/core';
+import { Treatment } from '../treatment/treatment.entity.js';
+import { BaseEntity } from '../shared/baseEntity.entity.js';
 
 @Entity()
-  export class Treatment_price extends BaseEntity{
+export class Treatment_price extends BaseEntity {
+  @Property({ nullable: false })
+  vigDate!: Date;
 
-    @Property({ nullable: false })
-    vigDate!: Date
-  
-    @Property({ nullable: false })
-    cost!: number
+  @Property({ nullable: false, type: 'decimal', precision: 10, scale: 4 })
+  cost!: number;
 
-    @ManyToOne(() => Treatment, {nullable: false})
-    treatment !: Rel<Treatment>
-
-  }
+  @ManyToOne(() => Treatment, { nullable: false })
+  treatment!: Rel<Treatment>;
+}

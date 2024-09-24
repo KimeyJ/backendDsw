@@ -7,9 +7,14 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { Entity, Property } from "@mikro-orm/core";
-import { BaseEntity } from "../shared/baseEntity.entity.js";
+import { Entity, Property, Collection, OneToMany, Cascade, } from '@mikro-orm/core';
+import { BaseEntity } from '../shared/baseEntity.entity.js';
+import { Doctor_consulting } from '../doctor_consulting/doctor_consulting.entity.js';
 export let Consulting = class Consulting extends BaseEntity {
+    constructor() {
+        super(...arguments);
+        this.doctors = new Collection(this);
+    }
 };
 __decorate([
     Property({ nullable: false }),
@@ -19,6 +24,12 @@ __decorate([
     Property({ nullable: false }),
     __metadata("design:type", Number)
 ], Consulting.prototype, "street_number", void 0);
+__decorate([
+    OneToMany(() => Doctor_consulting, (doctor_consulting) => doctor_consulting.consulting, {
+        cascade: [Cascade.ALL],
+    }),
+    __metadata("design:type", Object)
+], Consulting.prototype, "doctors", void 0);
 Consulting = __decorate([
     Entity()
 ], Consulting);

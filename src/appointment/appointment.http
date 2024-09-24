@@ -1,0 +1,31 @@
+### Get all the appointments
+GET http://localhost:3000/api/appointments
+
+### Create an appointment
+# @name createAppointment
+POST http://localhost:3000/api/appointments
+Content-Type: application/json
+
+{
+    "appoDate": "04-12-2023",
+    "assisted": false,
+    "doctor": 1,
+    "patient": 2
+}
+
+### ID
+@id = {{createAppointment.response.body.data.id}}
+
+### Get one appointment
+GET http://localhost:3000/api/appointments/{{id}}
+
+### Update an appointment
+PUT http://localhost:3000/api/appointments/{{id}}
+Content-Type: application/json
+
+{
+    "assisted": true
+}
+
+### Delete an appointment
+DELETE http://localhost:3000/api/appointments/{{id}}

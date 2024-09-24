@@ -13,11 +13,12 @@ import { BaseEntity } from '../shared/baseEntity.entity.js';
 import { Specialty } from '../specialty/specialty.entity.js';
 import { Follow_up } from '../follow_up/follow_up.entity.js';
 import { Appointment } from '../appointment/appointment.entity.js';
+import { Doctor_consulting } from '../doctor_consulting/doctor_consulting.entity.js';
 
 @Entity()
-export class User {
-  @PrimaryKey()
-  dni?: number;
+export class User extends BaseEntity {
+  @Property({ nullable: false })
+  dni!: string;
 
   @Property({ nullable: false })
   firstName!: string;
@@ -40,7 +41,7 @@ export class User {
   @Property({ nullable: false })
   cod_user!: number;
 
-  @ManyToOne(() => Specialty, { nullable: false })
+  @ManyToOne(() => Specialty, { nullable: true })
   specialty!: Rel<Specialty>;
 
   @OneToMany(() => Follow_up, (follow_up) => follow_up.patient, {
@@ -53,4 +54,12 @@ export class User {
     cascade: [Cascade.ALL],
   })
   follow_up = new Collection<User>(this);
+  @OneToMany(
+    () => Doctor_consulting,
+    (doctor_consulting) => doctor_consulting.doctor,
+    {
+      cascade: [Cascade.ALL],
+    }
+  )
+  consultings = new Collection<Doctor_consulting>(this);
 }

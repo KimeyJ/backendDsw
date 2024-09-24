@@ -12,6 +12,7 @@ function sanitizeTreatment_priceInput(
   req.body.sanitizedInput = {
     id: req.body.id,
     vigDate: req.body.vigDate,
+    cost: req.body.cost,
     treatment: req.body.treatment,
   };
 
@@ -25,7 +26,13 @@ function sanitizeTreatment_priceInput(
 }
 async function findAll(req: Request, res: Response) {
   try {
-    const treatment_prices = await em.find(Treatment_price, {});
+    const treatment_prices = await em.find(
+      Treatment_price,
+      {},
+      {
+        populate: ['treatment'],
+      }
+    );
     res
       .status(200)
       .json({ message: 'found all prices', data: treatment_prices });
@@ -37,7 +44,13 @@ async function findAll(req: Request, res: Response) {
 async function findOne(req: Request, res: Response) {
   try {
     const id = Number.parseInt(req.params.id);
-    const treatment_price = await em.findOneOrFail(Treatment_price, { id });
+    const treatment_price = await em.findOneOrFail(
+      Treatment_price,
+      { id },
+      {
+        populate: ['treatment'],
+      }
+    );
     res.status(200).json({ message: 'found price', data: treatment_price });
   } catch (error: any) {
     res.status(500).json({ message: error.message });

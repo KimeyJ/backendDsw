@@ -5,10 +5,10 @@ import { Doctor_consulting } from '../doctor_consulting/doctor_consulting.entity
 @Entity()
 export class Time_table extends BaseEntity {
   @Property({ nullable: false })
-  day_time!: string;
+  dayTime!: string;
 
   @Property({ nullable: false })
-  vigDate!: boolean;
+  vigDate!: Date;
 
   @ManyToOne(() => Doctor_consulting, { nullable: false })
   doctor_consulting!: Rel<Doctor_consulting>;

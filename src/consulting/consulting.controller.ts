@@ -12,7 +12,7 @@ function sanitizeConsultingInput(
   req.body.sanitizedInput = {
     id: req.body.id,
     street: req.body.street,
-    altStreet: req.body.altStreet,
+    street_number: req.body.street_number,
   };
 
   Object.keys(req.body.sanitizedInput).forEach((key) => {
@@ -25,14 +25,14 @@ function sanitizeConsultingInput(
 }
 
 async function findAll(req: Request, res: Response) {
-    try {
-      const consultings = await em.find(Consulting, {});
-      res
-        .status(200)
-        .json({ message: 'Found all consultings', data: consultings });
-    } catch (error: any) {
-      res.status(500).json({ message: error.message });
-    }
+  try {
+    const consultings = await em.find(Consulting, {});
+    res
+      .status(200)
+      .json({ message: 'Found all consultings', data: consultings });
+  } catch (error: any) {
+    res.status(500).json({ message: error.message });
+  }
 }
 
 async function findOne(req: Request, res: Response) {
@@ -46,27 +46,27 @@ async function findOne(req: Request, res: Response) {
 }
 
 async function add(req: Request, res: Response) {
-    try {
-      const consulting = em.create(Consulting, req.body.sanitizedInput);
-      await em.flush();
-      res.status(201).json({ message: 'Consulting created', data: consulting });
-    } catch (error: any) {
-      res.status(500).json({ message: error.message });
-    }
+  try {
+    const consulting = em.create(Consulting, req.body.sanitizedInput);
+    await em.flush();
+    res.status(201).json({ message: 'Consulting created', data: consulting });
+  } catch (error: any) {
+    res.status(500).json({ message: error.message });
+  }
 }
 
 async function update(req: Request, res: Response) {
-    try {
-      const id = Number.parseInt(req.params.id);
-      const ConsultingToUpdate = await em.findOneOrFail(Consulting, { id });
-      em.assign(ConsultingToUpdate, req.body.sanitizedInput);
-      await em.flush();
-      res
-        .status(200)
-        .json({ message: 'Consulting updated', data: ConsultingToUpdate });
-    } catch (error: any) {
-      res.status(500).json({ message: error.message });
-    }
+  try {
+    const id = Number.parseInt(req.params.id);
+    const ConsultingToUpdate = await em.findOneOrFail(Consulting, { id });
+    em.assign(ConsultingToUpdate, req.body.sanitizedInput);
+    await em.flush();
+    res
+      .status(200)
+      .json({ message: 'Consulting updated', data: ConsultingToUpdate });
+  } catch (error: any) {
+    res.status(500).json({ message: error.message });
+  }
 }
 
 async function remove(req: Request, res: Response) {

@@ -5,6 +5,8 @@ function sanitizeSpecialtyInput(req, res, next) {
     req.body.sanitizedInput = {
         id: req.body.id,
         name: req.body.name,
+        doctors: req.body.doctors,
+        prices: req.body.prices,
     };
     Object.keys(req.body.sanitizedInput).forEach((key) => {
         if (req.body.sanitizedInput[key] === undefined) {
@@ -15,8 +17,12 @@ function sanitizeSpecialtyInput(req, res, next) {
 }
 async function findAll(req, res) {
     try {
-        const specialties = await em.find(Specialty, {});
-        res.status(200).json({ message: 'Found all specialties', data: specialties });
+        const specialties = await em.find(Specialty, {}, {
+            populate: ['doctors', 'prices'],
+        });
+        res
+            .status(200)
+            .json({ message: 'Found all specialties', data: specialties });
     }
     catch (error) {
         res.status(500).json({ message: error.message });
@@ -25,7 +31,7 @@ async function findAll(req, res) {
 async function findOne(req, res) {
     try {
         const id = Number.parseInt(req.params.id);
-        const speacialty = await em.find(Specialty, { id });
+        const speacialty = await em.find(Specialty, { id }, { populate: ['doctors', 'prices'] });
         res.status(200).json({ message: 'Found speacialty', data: speacialty });
     }
     catch (error) {
@@ -48,7 +54,9 @@ async function update(req, res) {
         const SpecialtyToUpdate = await em.findOneOrFail(Specialty, { id });
         em.assign(SpecialtyToUpdate, req.body.sanitizedInput);
         await em.flush();
-        res.status(200).json({ message: 'Specialty updated', data: SpecialtyToUpdate });
+        res
+            .status(200)
+            .json({ message: 'Specialty updated', data: SpecialtyToUpdate });
     }
     catch (error) {
         res.status(500).json({ message: error.message });

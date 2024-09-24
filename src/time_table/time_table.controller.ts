@@ -11,7 +11,7 @@ function sanitizeTime_tableInput(
 ) {
   req.body.sanitizedInput = {
     id: req.body.id,
-    day_time: req.body.day_time,
+    dayTime: req.body.dayTime,
     vigDate: req.body.vigDate,
     doctor_consulting: req.body.doctor_consulting,
   };
@@ -27,7 +27,11 @@ function sanitizeTime_tableInput(
 
 async function findAll(req: Request, res: Response) {
   try {
-    const time_tables = await em.find(Time_table, {});
+    const time_tables = await em.find(
+      Time_table,
+      {},
+      { populate: ['doctor_consulting'] }
+    );
     res
       .status(200)
       .json({ message: 'Found all time tables', data: time_tables });
@@ -39,7 +43,13 @@ async function findAll(req: Request, res: Response) {
 async function findOne(req: Request, res: Response) {
   try {
     const id = Number.parseInt(req.params.id);
-    const time_table = await em.find(Time_table, { id });
+    const time_table = await em.find(
+      Time_table,
+      { id },
+      {
+        populate: ['doctor_consulting'],
+      }
+    );
     res.status(200).json({ message: 'Found time table', data: time_table });
   } catch (error: any) {
     res.status(500).json({ message: error.message });

@@ -1,27 +1,32 @@
-### Get all the specialties
-GET http://localhost:3000/api/consulting
+### Get all the consultings
+GET http://localhost:3000/api/consultings
 
-### Get one consulting
-GET http://localhost:3000/api/consulting/1
 
 ### Create a consulting
-POST http://localhost:3000/api/consulting
+# @name createConsulting
+POST http://localhost:3000/api/consultings
 Content-Type: application/json
 
 {
     "id": "2",
     "street": "Skibidi",
-    "altStreet": "Toilet"
+    "street_number": 12345
 }
 
+### ID
+@id = {{createConsulting.response.body.data.id}} 
+
+### Get one consulting
+GET http://localhost:3000/api/consultings/{{id}}
+
 ### Update a consulting
-PUT http://localhost:3000/api/consulting/2
+PUT http://localhost:3000/api/consultings/{{id}}
 Content-Type: application/json
 
 {
     "street": "Sigma",
-    "altStreet": "Rizz"
+    "street_number": 54321
 }
 
 ### Delete a consulting
-DELETE http://localhost:3000/api/consulting/2
+DELETE http://localhost:3000/api/consultings/{{id}}

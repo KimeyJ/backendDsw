@@ -7,18 +7,23 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { Entity, Property } from '@mikro-orm/core';
+import { Entity, Property, ManyToOne } from '@mikro-orm/core';
 import { BaseEntity } from '../shared/baseEntity.entity.js';
+import { Doctor_consulting } from '../doctor_consulting/doctor_consulting.entity.js';
 export let Time_table = class Time_table extends BaseEntity {
 };
 __decorate([
     Property({ nullable: false }),
     __metadata("design:type", String)
-], Time_table.prototype, "day_time", void 0);
+], Time_table.prototype, "dayTime", void 0);
 __decorate([
     Property({ nullable: false }),
-    __metadata("design:type", Boolean)
+    __metadata("design:type", Date)
 ], Time_table.prototype, "vigDate", void 0);
+__decorate([
+    ManyToOne(() => Doctor_consulting, { nullable: false }),
+    __metadata("design:type", Object)
+], Time_table.prototype, "doctor_consulting", void 0);
 Time_table = __decorate([
     Entity()
 ], Time_table);

@@ -17,7 +17,7 @@ __decorate([
     __metadata("design:type", Date)
 ], Specialty_price.prototype, "vigDate", void 0);
 __decorate([
-    Property({ nullable: false }),
+    Property({ nullable: false, type: 'decimal', precision: 10, scale: 4 }),
     __metadata("design:type", Number)
 ], Specialty_price.prototype, "cost", void 0);
 __decorate([

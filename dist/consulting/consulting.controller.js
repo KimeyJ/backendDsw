@@ -5,7 +5,7 @@ function sanitizeConsultingInput(req, res, next) {
     req.body.sanitizedInput = {
         id: req.body.id,
         street: req.body.street,
-        altStreet: req.body.altStreet,
+        street_number: req.body.street_number,
     };
     Object.keys(req.body.sanitizedInput).forEach((key) => {
         if (req.body.sanitizedInput[key] === undefined) {

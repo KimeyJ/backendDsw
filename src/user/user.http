@@ -1,26 +1,32 @@
 ### Get all the users
-GET http://localhost:3000/api/user
+GET http://localhost:3000/api/users
 
-### Get one user
-GET http://localhost:3000/api/user/4585666
 
 ### Create an user
-POST http://localhost:3000/api/user
+# @name createUser
+POST http://localhost:3000/api/users
 Content-Type: application/json
 
 {
-    "id": "4585000",
-    "fisrtName": "Jose",
-    "lastName":"Cuack",
+    "dni": "4585000",
+    "firstName": "Jose",
+    "lastName": "Cuack",
     "email": "jose@gmail.com",
     "password": "contrar",
     "age":27,
-    "tuitionNumber":-1
-
+    "tuition_number":55,
+    "cod_user": 1,
+    "specialty": 2
  }   
 
+### ID
+@id = {{createUser.response.body.data.id}}
+
+### Get one user
+GET http://localhost:3000/api/users/{{id}}
+
 ### Update an user
-PUT http://localhost:3000/api/user/4585000
+PUT http://localhost:3000/api/users/{{id}}
 Content-Type: application/json
 
 {
@@ -28,5 +34,20 @@ Content-Type: application/json
     "email": "ricarda@gmail.com"
 }
 
-### Delete a user
-DELETE http://localhost:3000/api/user/4585666
+### Delete an user
+DELETE http://localhost:3000/api/users/{{id}}
+
+### Create another user
+# @name createUser2
+POST http://localhost:3000/api/users
+Content-Type: application/json
+
+{
+    "dni": "44848810",
+    "firstName": "Ernesto",
+    "lastName": "Rodriguez",
+    "email": "ERodriguez@gmail.com",
+    "password": "123456",
+    "age":30,
+    "cod_user": 2
+ }   

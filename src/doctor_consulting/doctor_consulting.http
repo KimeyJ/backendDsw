@@ -1,0 +1,30 @@
+### Get all DC
+GET http://localhost:3000/api/doctor_consultings
+
+### Create one DC
+# @name createDC
+POST http://localhost:3000/api/doctor_consultings
+Content-Type: application/json
+
+{
+    "vigency": true,
+    "doctor": 1,
+    "consulting": 2
+}
+
+### ID
+@id = {{createDC.response.body.data.id}}
+
+### Get one DC
+GET http://localhost:3000/api/doctor_consultings/{{id}}
+
+### Update one DC
+PUT http://localhost:3000/api/doctor_consultings/{{id}}
+Content-Type: application/json
+
+{
+    "vigency": false
+}
+
+### Delete one DC
+DELETE http://localhost:3000/api/doctor_consultings/{{id}}

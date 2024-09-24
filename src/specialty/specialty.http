@@ -1,29 +1,29 @@
 ### Get all the specialties
-GET http://localhost:3000/api/specialty
+GET http://localhost:3000/api/specialties
 
 
 ### POST
 # @name createSpecialty
 POST http://localhost:3000/api/specialties
-
 Content-Type: application/json
+
 {
-    "name": "Obstreta"
+    "name": "Cirujano"
 }
 
 ### ID
 @id = {{createSpecialty.response.body.data.id}}
 
 ### Get one specialty
-GET http://localhost:3000/api/specialty/{{id}}
+GET http://localhost:3000/api/specialties/{{id}}
 
 ### Update a specialty
-PUT http://localhost:3000/api/specialty/{{id}}
+PUT http://localhost:3000/api/specialties/{{id}}
 Content-Type: application/json
 
 {
-    "name": "Abortista"
+    "name": "Partero"
 }
 
 ### Delete a specialty
-DELETE http://localhost:3000/api/specialty/{{id}}
+DELETE http://localhost:3000/api/specialties/{{id}}

@@ -1,0 +1,30 @@
+### Get all time tables
+GET http://localhost:3000/api/time_tables
+
+### Create time table
+# @name createTimeTable
+POST http://localhost:3000/api/time_tables
+Content-Type: application/json
+
+{
+    "dayTime": "Mondays, 16:00",
+    "vigDate": "04-12-2023",
+    "doctor_consulting": 2
+}
+
+### ID
+@id = {{createTimeTable.response.body.data.id}}
+
+### Get one time table
+GET http://localhost:3000/api/time_tables/{{id}}
+
+### Update one time table
+PUT http://localhost:3000/api/time_tables/{{id}}
+Content-Type: application/json
+
+{
+    "dayTime": "05-12-2023"
+}
+
+### Delete one time table
+DELETE http://localhost:3000/api/time_tables/{{id}}
