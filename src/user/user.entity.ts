@@ -35,7 +35,7 @@ export class User extends BaseEntity {
   @Property({ nullable: false })
   age!: number;
 
-  @Property({ nullable: true })
+  @Property({ nullable: true, unique: true })
   tuition_number!: number;
 
   @Property({ nullable: false })
