@@ -6,7 +6,7 @@ function sanitizeTreatmentInput(req, res, next) {
         id: req.body.id,
         name: req.body.name,
         description: req.body.description,
-        prices: req.body.prices,
+        price: req.body.price,
         follow_ups: req.body.follow_ups,
     };
     Object.keys(req.body.sanitizedInput).forEach((key) => {
@@ -18,9 +18,7 @@ function sanitizeTreatmentInput(req, res, next) {
 }
 async function findAll(req, res) {
     try {
-        const treatments = await em.find(Treatment, {}, {
-            populate: ['prices'],
-        });
+        const treatments = await em.find(Treatment, {});
         res.status(200).json({ message: 'found all treatments', data: treatments });
     }
     catch (error) {
@@ -30,9 +28,7 @@ async function findAll(req, res) {
 async function findOne(req, res) {
     try {
         const id = Number.parseInt(req.params.id);
-        const treatment = await em.findOneOrFail(Treatment, { id }, {
-            populate: ['prices'],
-        });
+        const treatment = await em.findOneOrFail(Treatment, { id });
         res.status(200).json({ message: 'found treatment', data: treatment });
     }
     catch (error) {

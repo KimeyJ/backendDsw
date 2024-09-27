@@ -9,7 +9,8 @@ Content-Type: application/json
 
 {
     "name": "Radiografia",
-    "description": "toma imágenes de las estructuras internas del cuerpo"
+    "description": "toma imágenes de las estructuras internas del cuerpo",
+    "price": 177.7
 }
 
 ### ID
@@ -25,7 +26,8 @@ Content-Type: application/json
 
 {
     "name": "Quirofano",
-    "description": "Lugar para realizar cirugias"
+    "description": "Lugar para realizar cirugias",
+    "price": 123.6
 }
 
 ### Delete a tratment

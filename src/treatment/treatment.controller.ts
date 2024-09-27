@@ -14,7 +14,7 @@ function sanitizeTreatmentInput(
     id: req.body.id,
     name: req.body.name,
     description: req.body.description,
-    prices: req.body.prices,
+    price: req.body.price,
     follow_ups: req.body.follow_ups,
   };
 
@@ -28,13 +28,7 @@ function sanitizeTreatmentInput(
 }
 async function findAll(req: Request, res: Response) {
   try {
-    const treatments = await em.find(
-      Treatment,
-      {},
-      {
-        populate: ['prices'],
-      }
-    );
+    const treatments = await em.find(Treatment, {});
     res.status(200).json({ message: 'found all treatments', data: treatments });
   } catch (error: any) {
     res.status(500).json({ message: error.message });
@@ -44,13 +38,7 @@ async function findAll(req: Request, res: Response) {
 async function findOne(req: Request, res: Response) {
   try {
     const id = Number.parseInt(req.params.id);
-    const treatment = await em.findOneOrFail(
-      Treatment,
-      { id },
-      {
-        populate: ['prices'],
-      }
-    );
+    const treatment = await em.findOneOrFail(Treatment, { id });
     res.status(200).json({ message: 'found treatment', data: treatment });
   } catch (error: any) {
     res.status(500).json({ message: error.message });

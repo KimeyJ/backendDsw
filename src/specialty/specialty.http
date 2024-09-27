@@ -8,7 +8,8 @@ POST http://localhost:3000/api/specialties
 Content-Type: application/json
 
 {
-    "name": "Cirujano"
+    "name": "Cirujano",
+    "price": 125.5
 }
 
 ### ID
@@ -22,7 +23,8 @@ PUT http://localhost:3000/api/specialties/{{id}}
 Content-Type: application/json
 
 {
-    "name": "Partero"
+    "name": "Partero",
+    "price": 50.78
 }
 
 ### Delete a specialty

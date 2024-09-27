@@ -6,7 +6,6 @@ import {
   OneToMany,
   ManyToMany,
 } from '@mikro-orm/core';
-import { Treatment_price } from '../treatment_price/treatment_price.entity.js';
 import { Follow_up } from '../follow_up/follow_up.entity.js';
 import { BaseEntity } from '../shared/baseEntity.entity.js';
 import { Followup_treatment } from '../followup_treatment/followup_treatment.entity.js';
@@ -17,11 +16,8 @@ export class Treatment extends BaseEntity {
   name!: string;
   @Property()
   description!: string;
-  @OneToMany(() => Treatment_price, (price) => price.treatment, {
-    cascade: [Cascade.ALL],
-  })
-  prices = new Collection<Treatment_price>(this);
-
+  @Property({ nullable: false, type: 'decimal', precision: 10, scale: 4 })
+  price!: number;
   @OneToMany(
     () => Followup_treatment,
     (followup_treatment) => followup_treatment.treatment,

@@ -13,7 +13,7 @@ function sanitizeSpecialtyInput(
     id: req.body.id,
     name: req.body.name,
     doctors: req.body.doctors,
-    prices: req.body.prices,
+    price: req.body.price,
   };
 
   Object.keys(req.body.sanitizedInput).forEach((key) => {
@@ -31,7 +31,7 @@ async function findAll(req: Request, res: Response) {
       Specialty,
       {},
       {
-        populate: ['doctors', 'prices'],
+        populate: ['doctors'],
       }
     );
     res
@@ -48,7 +48,7 @@ async function findOne(req: Request, res: Response) {
     const speacialty = await em.find(
       Specialty,
       { id },
-      { populate: ['doctors', 'prices'] }
+      { populate: ['doctors'] }
     );
     res.status(200).json({ message: 'Found speacialty', data: speacialty });
   } catch (error: any) {

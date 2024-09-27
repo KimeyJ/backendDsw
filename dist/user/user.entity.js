@@ -45,7 +45,7 @@ __decorate([
     __metadata("design:type", Number)
 ], User.prototype, "age", void 0);
 __decorate([
-    Property({ nullable: true }),
+    Property({ nullable: true, unique: true }),
     __metadata("design:type", Number)
 ], User.prototype, "tuition_number", void 0);
 __decorate([

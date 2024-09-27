@@ -7,15 +7,13 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { Entity, Property, Collection, OneToMany, Cascade } from "@mikro-orm/core";
-import { BaseEntity } from "../shared/baseEntity.entity.js";
-import { User } from "../user/user.entity.js";
-import { Specialty_price } from "../specialty_price/specialty_price.entity.js";
+import { Entity, Property, Collection, OneToMany, Cascade, } from '@mikro-orm/core';
+import { BaseEntity } from '../shared/baseEntity.entity.js';
+import { User } from '../user/user.entity.js';
 export let Specialty = class Specialty extends BaseEntity {
     constructor() {
         super(...arguments);
         this.doctors = new Collection(this);
-        this.prices = new Collection(this);
     }
 };
 __decorate([
@@ -23,17 +21,15 @@ __decorate([
     __metadata("design:type", String)
 ], Specialty.prototype, "name", void 0);
 __decorate([
+    Property({ nullable: false, type: 'decimal', precision: 10, scale: 4 }),
+    __metadata("design:type", Number)
+], Specialty.prototype, "price", void 0);
+__decorate([
     OneToMany(() => User, (user) => user.specialty, {
         cascade: [Cascade.ALL],
     }),
     __metadata("design:type", Object)
 ], Specialty.prototype, "doctors", void 0);
-__decorate([
-    OneToMany(() => Specialty_price, (price) => price.specialty, {
-        cascade: [Cascade.ALL],
-    }),
-    __metadata("design:type", Object)
-], Specialty.prototype, "prices", void 0);
 Specialty = __decorate([
     Entity()
 ], Specialty);

@@ -8,13 +8,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Cascade, Collection, Entity, Property, OneToMany, } from '@mikro-orm/core';
-import { Treatment_price } from '../treatment_price/treatment_price.entity.js';
 import { BaseEntity } from '../shared/baseEntity.entity.js';
 import { Followup_treatment } from '../followup_treatment/followup_treatment.entity.js';
 export let Treatment = class Treatment extends BaseEntity {
     constructor() {
         super(...arguments);
-        this.prices = new Collection(this);
         this.follow_ups = new Collection(this);
     }
 };
@@ -27,11 +25,9 @@ __decorate([
     __metadata("design:type", String)
 ], Treatment.prototype, "description", void 0);
 __decorate([
-    OneToMany(() => Treatment_price, (price) => price.treatment, {
-        cascade: [Cascade.ALL],
-    }),
-    __metadata("design:type", Object)
-], Treatment.prototype, "prices", void 0);
+    Property({ nullable: false, type: 'decimal', precision: 10, scale: 4 }),
+    __metadata("design:type", Number)
+], Treatment.prototype, "price", void 0);
 __decorate([
     OneToMany(() => Followup_treatment, (followup_treatment) => followup_treatment.treatment, {
         cascade: [Cascade.ALL],
