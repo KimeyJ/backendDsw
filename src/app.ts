@@ -11,8 +11,8 @@ import { follow_upRouter } from './follow_up/follow_up.routes.js';
 import { followup_treatmentRouter } from './followup_treatment/followup_treatment.routes.js';
 import { time_tableRouter } from './time_table/time_table.routes.js';
 import { userRouter } from './user/user.routes.js';
+import cors from 'cors';
 
-const cors = require('cors');
 const app = express();
 app.use(express.json());
 

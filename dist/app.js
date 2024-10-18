@@ -11,17 +11,23 @@ import { follow_upRouter } from './follow_up/follow_up.routes.js';
 import { followup_treatmentRouter } from './followup_treatment/followup_treatment.routes.js';
 import { time_tableRouter } from './time_table/time_table.routes.js';
 import { userRouter } from './user/user.routes.js';
+import cors from 'cors';
 const app = express();
 app.use(express.json());
+app.use(cors());
 app.use((req, res, next) => {
     RequestContext.create(orm.em, next);
 });
+/*
 app.use(function (req, res, next) {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Methods', 'GET, PUT, POST');
-    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-    next();
-});
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET, PUT, POST');
+  res.header(
+    'Access-Control-Allow-Headers',
+    'Origin, X-Requested-With, Content-Type, Accept'
+  );
+  next();
+});*/
 app.use('/api/specialties', specialtyRouter); //listop
 app.use('/api/treatments', treatmentRouter); //listop
 app.use('/api/consultings', consultingRouter); //listop

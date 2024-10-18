@@ -17,6 +17,7 @@ function sanitizeUserInput(req: Request, res: Response, next: NextFunction) {
     cod_user: req.body.cod_user,
     specialty: req.body.specialty,
     follow_up: req.body.follow_up,
+    specialtyToSearch: req.body.specialtyToSearch,
   };
 
   Object.keys(req.body.sanitizedInput).forEach((key) => {
@@ -27,10 +28,20 @@ function sanitizeUserInput(req: Request, res: Response, next: NextFunction) {
 
   next();
 }
+
 async function findAll(req: Request, res: Response) {
   try {
-    const users = await em.find(User, {}, { populate: ['specialty'] });
-    res.status(200).json({ message: 'Found all users', data: users });
+    if (req.body.specialtyToSearch !== undefined) {
+      const specialtyToSearch = Number.parseInt(req.body.specialtyToSearch);
+      const users = await em.find(User, { specialty: specialtyToSearch });
+      res.status(200).json({
+        message: 'Found all doctors with the specified specialty',
+        data: users,
+      });
+    } else {
+      const users = await em.find(User, {}, { populate: ['specialty'] });
+      res.status(200).json({ message: 'Found all users', data: users });
+    }
   } catch (error: any) {
     res.status(500).json({ message: error.message });
   }

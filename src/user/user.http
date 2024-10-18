@@ -1,6 +1,13 @@
 ### Get all the users
 GET http://localhost:3000/api/users
 
+### Get all the users
+GET http://localhost:3000/api/users
+Content-Type: application/json
+
+{
+    "specialtyToSearch": 2
+}   
 
 ### Create an user
 # @name createUser
