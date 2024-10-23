@@ -1,0 +1,34 @@
+### Get all the doctors
+GET http://localhost:3000/api/doctors
+
+
+### Get all the doctors
+GET http://localhost:3000/api/doctors
+Content-Type: application/json
+
+{
+    "specialtyToSearch": 7
+}   
+
+
+### Create an doctor
+# @name createDoctor
+POST http://localhost:3000/api/doctors
+Content-Type: application/json
+
+{
+    "firstName": "Jose",
+    "lastName": "Cuack",
+    "email": "jose@gmail.com",
+    "password": "contrar",
+    "age":27,
+    "tuition_number":56,
+    "cod_user": 1,
+    "specialty": 7
+}
+
+### ID
+@id = {{createDoctor.response.body.data.id}}
+
+### Get one user
+GET http://localhost:3000/api/doctors/{{id}}

@@ -6,7 +6,7 @@ import {
   Cascade,
 } from '@mikro-orm/core';
 import { BaseEntity } from '../shared/baseEntity.entity.js';
-import { User } from '../user/user.entity.js';
+import { Doctor } from '../doctor/doctor.entity.js';
 
 @Entity()
 export class Specialty extends BaseEntity {
@@ -16,8 +16,8 @@ export class Specialty extends BaseEntity {
   @Property({ nullable: false, type: 'decimal', precision: 10, scale: 4 })
   price!: number;
 
-  @OneToMany(() => User, (user) => user.specialty, {
+  @OneToMany(() => Doctor, (doctor) => doctor.specialty, {
     cascade: [Cascade.ALL],
   })
-  doctors = new Collection<User>(this);
+  doctors = new Collection<Doctor>(this);
 }

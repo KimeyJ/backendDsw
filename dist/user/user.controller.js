@@ -25,18 +25,8 @@ function sanitizeUserInput(req, res, next) {
 }
 async function findAll(req, res) {
     try {
-        if (req.body.specialtyToSearch !== undefined) {
-            const specialtyToSearch = Number.parseInt(req.body.specialtyToSearch);
-            const users = await em.find(User, { specialty: specialtyToSearch });
-            res.status(200).json({
-                message: 'Found all doctors with the specified specialty',
-                data: users,
-            });
-        }
-        else {
-            const users = await em.find(User, {}, { populate: ['specialty'] });
-            res.status(200).json({ message: 'Found all users', data: users });
-        }
+        const users = await em.find(User, {});
+        res.status(200).json({ message: 'Found all users', data: users });
     }
     catch (error) {
         res.status(500).json({ message: error.message });
@@ -45,7 +35,7 @@ async function findAll(req, res) {
 async function findOne(req, res) {
     try {
         const id = Number.parseInt(req.params.id);
-        const user = await em.findOneOrFail(User, { id }, { populate: ['specialty'] });
+        const user = await em.findOneOrFail(User, { id });
         res.status(200).json({ message: 'Found user', data: user });
     }
     catch (error) {

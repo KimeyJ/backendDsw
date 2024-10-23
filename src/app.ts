@@ -11,6 +11,7 @@ import { follow_upRouter } from './follow_up/follow_up.routes.js';
 import { followup_treatmentRouter } from './followup_treatment/followup_treatment.routes.js';
 import { time_tableRouter } from './time_table/time_table.routes.js';
 import { userRouter } from './user/user.routes.js';
+import { doctorRouter } from './doctor/doctor.routes.js';
 import cors from 'cors';
 
 const app = express();
@@ -41,6 +42,7 @@ app.use('/api/follow_ups', follow_upRouter); //listop
 app.use('/api/followup_treatments', followup_treatmentRouter); //listop
 app.use('/api/time_tables', time_tableRouter); //listop
 app.use('/api/users', userRouter); //listop
+app.use('/api/doctors', doctorRouter); //listop
 
 app.use((_, res) => {
   return res.status(404).send({ message: 'Resource not found' });

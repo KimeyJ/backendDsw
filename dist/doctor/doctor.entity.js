@@ -7,58 +7,59 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { Entity, Property, Cascade, OneToMany, Collection, } from '@mikro-orm/core';
+import { Entity, Property, ManyToOne, OneToMany, Cascade, Collection } from '@mikro-orm/core';
 import { BaseEntity } from '../shared/baseEntity.entity.js';
-import { Follow_up } from '../follow_up/follow_up.entity.js';
+import { Specialty } from '../specialty/specialty.entity.js';
 import { Appointment } from '../appointment/appointment.entity.js';
-export let User = class User extends BaseEntity {
+import { Doctor_consulting } from '../doctor_consulting/doctor_consulting.entity.js';
+export let Doctor = class Doctor extends BaseEntity {
     constructor() {
         super(...arguments);
-        this.follow_up = new Collection(this);
-        this.appos = new Collection(this);
+        this.pendingAppo = new Collection(this);
+        this.consultings = new Collection(this);
     }
 };
 __decorate([
     Property({ nullable: false }),
     __metadata("design:type", String)
-], User.prototype, "dni", void 0);
+], Doctor.prototype, "firstName", void 0);
 __decorate([
     Property({ nullable: false }),
     __metadata("design:type", String)
-], User.prototype, "firstName", void 0);
+], Doctor.prototype, "lastName", void 0);
 __decorate([
     Property({ nullable: false }),
     __metadata("design:type", String)
-], User.prototype, "lastName", void 0);
+], Doctor.prototype, "email", void 0);
 __decorate([
     Property({ nullable: false }),
     __metadata("design:type", String)
-], User.prototype, "email", void 0);
-__decorate([
-    Property({ nullable: false }),
-    __metadata("design:type", String)
-], User.prototype, "password", void 0);
+], Doctor.prototype, "password", void 0);
 __decorate([
     Property({ nullable: false }),
     __metadata("design:type", Number)
-], User.prototype, "age", void 0);
+], Doctor.prototype, "age", void 0);
 __decorate([
-    Property({ nullable: false }),
+    Property({ nullable: false, unique: true }),
     __metadata("design:type", Number)
-], User.prototype, "cod_user", void 0);
+], Doctor.prototype, "tuition_number", void 0);
 __decorate([
-    OneToMany(() => Follow_up, (follow_up) => follow_up.patient, {
+    ManyToOne(() => Specialty, { nullable: false }),
+    __metadata("design:type", Object)
+], Doctor.prototype, "specialty", void 0);
+__decorate([
+    OneToMany(() => Appointment, (appointment) => appointment.doctor, {
         cascade: [Cascade.ALL],
     }),
     __metadata("design:type", Object)
-], User.prototype, "follow_up", void 0);
+], Doctor.prototype, "pendingAppo", void 0);
 __decorate([
-    OneToMany(() => Appointment, (appointment) => appointment.patient, {
+    OneToMany(() => Doctor_consulting, (doctor_consulting) => doctor_consulting.doctor, {
         cascade: [Cascade.ALL],
     }),
     __metadata("design:type", Object)
-], User.prototype, "appos", void 0);
-User = __decorate([
+], Doctor.prototype, "consultings", void 0);
+Doctor = __decorate([
     Entity()
-], User);
-//# sourceMappingURL=user.entity.js.map
+], Doctor);
+//# sourceMappingURL=doctor.entity.js.map

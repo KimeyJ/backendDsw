@@ -35,31 +35,15 @@ export class User extends BaseEntity {
   @Property({ nullable: false })
   age!: number;
 
-  @Property({ nullable: true, unique: true })
-  tuition_number!: number;
-
   @Property({ nullable: false })
   cod_user!: number;
-
-  @ManyToOne(() => Specialty, { nullable: true })
-  specialty!: Rel<Specialty>;
 
   @OneToMany(() => Follow_up, (follow_up) => follow_up.patient, {
     cascade: [Cascade.ALL],
   })
+  follow_up = new Collection<User>(this);
   @OneToMany(() => Appointment, (appointment) => appointment.patient, {
     cascade: [Cascade.ALL],
   })
-  @OneToMany(() => Appointment, (appointment) => appointment.doctor, {
-    cascade: [Cascade.ALL],
-  })
-  follow_up = new Collection<User>(this);
-  @OneToMany(
-    () => Doctor_consulting,
-    (doctor_consulting) => doctor_consulting.doctor,
-    {
-      cascade: [Cascade.ALL],
-    }
-  )
-  consultings = new Collection<Doctor_consulting>(this);
+  appos = new Collection<Appointment>(this);
 }

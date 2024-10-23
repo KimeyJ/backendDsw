@@ -11,13 +11,14 @@ import { BaseEntity } from '../shared/baseEntity.entity.js';
 import { User } from '../user/user.entity.js';
 import { Consulting } from '../consulting/consulting.entity.js';
 import { Time_table } from '../time_table/time_table.entity.js';
+import { Doctor } from '../doctor/doctor.entity.js';
 
 @Entity()
 export class Doctor_consulting extends BaseEntity {
   @Property()
   vigency!: boolean;
-  @ManyToOne(() => User, { nullable: false })
-  doctor!: Rel<User>;
+  @ManyToOne(() => Doctor, { nullable: false })
+  doctor!: Rel<Doctor>;
   @ManyToOne(() => Consulting, { nullable: false })
   consulting!: Rel<Consulting>;
   @OneToMany(() => Time_table, (time_table) => time_table.doctor_consulting, {

@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { Entity, Property, Collection, OneToMany, Cascade, } from '@mikro-orm/core';
 import { BaseEntity } from '../shared/baseEntity.entity.js';
-import { User } from '../user/user.entity.js';
+import { Doctor } from '../doctor/doctor.entity.js';
 export let Specialty = class Specialty extends BaseEntity {
     constructor() {
         super(...arguments);
@@ -25,7 +25,7 @@ __decorate([
     __metadata("design:type", Number)
 ], Specialty.prototype, "price", void 0);
 __decorate([
-    OneToMany(() => User, (user) => user.specialty, {
+    OneToMany(() => Doctor, (doctor) => doctor.specialty, {
         cascade: [Cascade.ALL],
     }),
     __metadata("design:type", Object)

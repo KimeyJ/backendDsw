@@ -8,7 +8,7 @@ import {
   Cascade,
 } from '@mikro-orm/core';
 import { BaseEntity } from '../shared/baseEntity.entity.js';
-import { User } from '../user/user.entity.js';
+import { Doctor } from '../doctor/doctor.entity.js';
 import { Doctor_consulting } from '../doctor_consulting/doctor_consulting.entity.js';
 
 @Entity()

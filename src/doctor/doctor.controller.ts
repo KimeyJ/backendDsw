@@ -1,22 +1,21 @@
 import { Request, Response, NextFunction } from 'express';
-import { User } from './user.entity.js';
+import { Doctor } from './doctor.entity.js';
 import { orm } from '../shared/orm.js';
 
 const em = orm.em;
 
-function sanitizeUserInput(req: Request, res: Response, next: NextFunction) {
+function sanitizeDoctorInput(req: Request, res: Response, next: NextFunction) {
   req.body.sanitizedInput = {
     id: req.body.id,
-    dni: req.body.dni,
     firstName: req.body.firstName,
     lastName: req.body.lastName,
     email: req.body.email,
     password: req.body.password,
     age: req.body.age,
     tuition_number: req.body.tuition_number,
-    cod_user: req.body.cod_user,
     specialty: req.body.specialty,
-    follow_up: req.body.follow_up,
+    pendingAppo: req.body.pendingAppo,
+    consultings: req.body.consultings,
     specialtyToSearch: req.body.specialtyToSearch,
   };
 
@@ -31,8 +30,17 @@ function sanitizeUserInput(req: Request, res: Response, next: NextFunction) {
 
 async function findAll(req: Request, res: Response) {
   try {
-      const users = await em.find(User, {});
-      res.status(200).json({ message: 'Found all users', data: users });
+    if (req.body.specialtyToSearch !== undefined) {
+      const specialtyToSearch = Number.parseInt(req.body.specialtyToSearch);
+      const doctors = await em.find(Doctor, { specialty: specialtyToSearch },  {populate: ['specialty']});
+      res.status(200).json({
+        message: 'Found all doctors with the specified specialty',
+        data: doctors,
+      });
+    } else {
+      const doctors = await em.find(Doctor, {},{populate: ['specialty']});
+      res.status(200).json({ message: 'Found all doctors', data: doctors });
+    }
   } catch (error: any) {
     res.status(500).json({ message: error.message });
   }
@@ -41,11 +49,12 @@ async function findAll(req: Request, res: Response) {
 async function findOne(req: Request, res: Response) {
   try {
     const id = Number.parseInt(req.params.id);
-    const user = await em.findOneOrFail(
-      User,
+    const doctor = await em.findOneOrFail(
+      Doctor,
       { id },
+      {populate: ['specialty']}
     );
-    res.status(200).json({ message: 'Found user', data: user });
+    res.status(200).json({ message: 'Found doctor', data: doctor });
   } catch (error: any) {
     res.status(500).json({ message: error.message });
   }
@@ -53,9 +62,9 @@ async function findOne(req: Request, res: Response) {
 
 async function add(req: Request, res: Response) {
   try {
-    const user = em.create(User, req.body.sanitizedInput);
+    const doctor = em.create(Doctor, req.body.sanitizedInput);
     await em.flush();
-    res.status(201).json({ message: 'User created', data: user });
+    res.status(201).json({ message: 'Doctor created', data: doctor });
   } catch (error: any) {
     res.status(500).json({ message: error.message });
   }
@@ -64,12 +73,12 @@ async function add(req: Request, res: Response) {
 async function update(req: Request, res: Response) {
   try {
     const id = Number.parseInt(req.params.id);
-    const userToUpdate = await em.findOneOrFail(User, {
+    const doctorToUpdate = await em.findOneOrFail(Doctor, {
       id,
     });
-    em.assign(userToUpdate, req.body.sanitizedInput);
+    em.assign(doctorToUpdate, req.body.sanitizedInput);
     await em.flush();
-    res.status(200).json({ message: 'User updated', data: userToUpdate });
+    res.status(200).json({ message: 'Doctor updated', data: doctorToUpdate });
   } catch (error: any) {
     res.status(500).json({ message: error.message });
   }
@@ -78,12 +87,12 @@ async function update(req: Request, res: Response) {
 async function remove(req: Request, res: Response) {
   try {
     const id = Number.parseInt(req.params.id);
-    const user = em.getReference(User, id);
-    await em.removeAndFlush(user);
-    res.status(200).json({ message: 'User deleted' });
+    const doctor = em.getReference(Doctor, id);
+    await em.removeAndFlush(doctor);
+    res.status(200).json({ message: 'Doctor deleted' });
   } catch (error: any) {
     res.status(500).json({ message: error.message });
   }
 }
 
-export { sanitizeUserInput, findAll, findOne, add, update, remove };
+export { sanitizeDoctorInput, findAll, findOne, add, update, remove };
