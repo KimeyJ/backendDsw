@@ -7,12 +7,24 @@ import {
   update,
   remove,
 } from './appointment.controller.js';
+import { validateTokenAdmin } from '../shared/validateTokenAdmin.js';
+import { validateTokenUser } from '../shared/validateTokenUser.js';
 
 export const appointmentRouter = Router();
 
-appointmentRouter.get('/', findAll);
-appointmentRouter.get('/:id', findOne);
-appointmentRouter.post('/', sanitizeAppointmentInput, add);
-appointmentRouter.put('/:id', sanitizeAppointmentInput, update);
-appointmentRouter.patch('/:id', sanitizeAppointmentInput, update);
-appointmentRouter.delete('/:id', remove);
+appointmentRouter.get('/', validateTokenUser, findAll);
+appointmentRouter.get('/:id', validateTokenUser, findOne);
+appointmentRouter.post('/', sanitizeAppointmentInput, validateTokenUser, add);
+appointmentRouter.put(
+  '/:id',
+  sanitizeAppointmentInput,
+  validateTokenUser,
+  update
+);
+appointmentRouter.patch(
+  '/:id',
+  sanitizeAppointmentInput,
+  validateTokenUser,
+  update
+);
+appointmentRouter.delete('/:id', validateTokenUser, remove);

@@ -1,10 +1,12 @@
 import { Router } from 'express';
 import { sanitizeDoctorInput, findAll, findOne, add, update, remove, } from './doctor.controller.js';
+import { validateTokenAdmin } from '../shared/validateTokenAdmin.js';
+import { validateTokenUser } from '../shared/validateTokenUser.js';
 export const doctorRouter = Router();
-doctorRouter.get('/', findAll);
-doctorRouter.get('/:id', findOne);
-doctorRouter.post('/', sanitizeDoctorInput, add);
-doctorRouter.put('/:id', sanitizeDoctorInput, update);
-doctorRouter.patch('/:id', sanitizeDoctorInput, update);
-doctorRouter.delete('/:id', remove);
+doctorRouter.get('/', validateTokenUser, findAll);
+doctorRouter.get('/:id', validateTokenUser, findOne);
+doctorRouter.post('/', sanitizeDoctorInput, validateTokenAdmin, add);
+doctorRouter.put('/:id', sanitizeDoctorInput, validateTokenAdmin, update);
+doctorRouter.patch('/:id', sanitizeDoctorInput, validateTokenAdmin, update);
+doctorRouter.delete('/:id', validateTokenAdmin, remove);
 //# sourceMappingURL=doctor.routes.js.map

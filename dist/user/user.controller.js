@@ -1,5 +1,7 @@
 import { User } from './user.entity.js';
 import { orm } from '../shared/orm.js';
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 const em = orm.em;
 function sanitizeUserInput(req, res, next) {
     req.body.sanitizedInput = {
@@ -44,6 +46,9 @@ async function findOne(req, res) {
 }
 async function add(req, res) {
     try {
+        const password = req.body.sanitizedInput.password;
+        const hashedPassword = await bcrypt.hash(password, 10);
+        req.body.sanitizedInput.password = hashedPassword;
         const user = em.create(User, req.body.sanitizedInput);
         await em.flush();
         res.status(201).json({ message: 'User created', data: user });
@@ -77,5 +82,33 @@ async function remove(req, res) {
         res.status(500).json({ message: error.message });
     }
 }
-export { sanitizeUserInput, findAll, findOne, add, update, remove };
+async function loginUser(req, res) {
+    try {
+        const dni = req.body.dni;
+        const password = req.body.password;
+        const users = await em.find(User, { dni: dni });
+        if (users === undefined) {
+            return res.status(400).json({ message: 'User doesnt exist' });
+        }
+        //res.json({ users });
+        const user = users[0];
+        const passwordCheck = await bcrypt.compare(password, user.password);
+        if (!passwordCheck) {
+            return res.status(400).json({ message: 'Password is incorrect' });
+        }
+        const codUser = user.cod_user;
+        if (user.cod_user == 1) {
+            const token = jwt.sign({ dni: dni }, process.env.SECRET_KEY || 'YoHeBaiteadoConCocodrilos');
+            res.json({ token });
+        }
+        else if (user.cod_user == 0) {
+            const token = jwt.sign({ dni: dni }, process.env.ADMIN_KEY || 'YoHeJijeado500Jijos');
+            res.json({ token });
+        }
+    }
+    catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+export { sanitizeUserInput, findAll, findOne, add, update, remove, loginUser };
 //# sourceMappingURL=user.controller.js.map

@@ -1,6 +1,8 @@
 import { Request, Response, NextFunction } from 'express';
 import { User } from './user.entity.js';
 import { orm } from '../shared/orm.js';
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 
 const em = orm.em;
 
@@ -31,8 +33,8 @@ function sanitizeUserInput(req: Request, res: Response, next: NextFunction) {
 
 async function findAll(req: Request, res: Response) {
   try {
-      const users = await em.find(User, {});
-      res.status(200).json({ message: 'Found all users', data: users });
+    const users = await em.find(User, {});
+    res.status(200).json({ message: 'Found all users', data: users });
   } catch (error: any) {
     res.status(500).json({ message: error.message });
   }
@@ -41,10 +43,7 @@ async function findAll(req: Request, res: Response) {
 async function findOne(req: Request, res: Response) {
   try {
     const id = Number.parseInt(req.params.id);
-    const user = await em.findOneOrFail(
-      User,
-      { id },
-    );
+    const user = await em.findOneOrFail(User, { id });
     res.status(200).json({ message: 'Found user', data: user });
   } catch (error: any) {
     res.status(500).json({ message: error.message });
@@ -53,6 +52,9 @@ async function findOne(req: Request, res: Response) {
 
 async function add(req: Request, res: Response) {
   try {
+    const password = req.body.sanitizedInput.password as string;
+    const hashedPassword = await bcrypt.hash(password, 10);
+    req.body.sanitizedInput.password = hashedPassword;
     const user = em.create(User, req.body.sanitizedInput);
     await em.flush();
     res.status(201).json({ message: 'User created', data: user });
@@ -86,4 +88,37 @@ async function remove(req: Request, res: Response) {
   }
 }
 
-export { sanitizeUserInput, findAll, findOne, add, update, remove };
+async function loginUser(req: Request, res: Response) {
+  try {
+    const dni = req.body.dni as string;
+    const password = req.body.password;
+    const users = await em.find(User, { dni: dni });
+    if (users === undefined) {
+      return res.status(400).json({ message: 'User doesnt exist' });
+    }
+    //res.json({ users });
+    const user = users[0];
+    const passwordCheck = await bcrypt.compare(password, user.password);
+    if (!passwordCheck) {
+      return res.status(400).json({ message: 'Password is incorrect' });
+    }
+    const codUser = user.cod_user as Number;
+    if (user.cod_user == 1) {
+      const token = jwt.sign(
+        { dni: dni },
+        process.env.SECRET_KEY || 'YoHeBaiteadoConCocodrilos'
+      );
+      res.json({ token });
+    } else if (user.cod_user == 0) {
+      const token = jwt.sign(
+        { dni: dni },
+        process.env.ADMIN_KEY || 'YoHeJijeado500Jijos'
+      );
+      res.json({ token });
+    }
+  } catch (error: any) {
+    res.status(500).json({ message: error.message });
+  }
+}
+
+export { sanitizeUserInput, findAll, findOne, add, update, remove, loginUser };
