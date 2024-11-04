@@ -102,16 +102,16 @@ async function loginUser(req: Request, res: Response) {
     if (!passwordCheck) {
       return res.status(400).json({ message: 'Password is incorrect' });
     }
-    const codUser = user.cod_user as Number;
+    //const codUser = user.cod_user as Number;
     if (user.cod_user == 1) {
       const token = jwt.sign(
-        { dni: dni },
+        { dni: dni, cod_user: user.cod_user },
         process.env.SECRET_KEY || 'YoHeBaiteadoConCocodrilos'
       );
       res.json({ token });
-    } else if (user.cod_user == 0) {
+    } else if (user.cod_user == 0) { 
       const token = jwt.sign(
-        { dni: dni },
+        { dni: dni, cod_user: user.cod_user },
         process.env.ADMIN_KEY || 'YoHeJijeado500Jijos'
       );
       res.json({ token });
