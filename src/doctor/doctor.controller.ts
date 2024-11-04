@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { Doctor } from './doctor.entity.js';
 import { orm } from '../shared/orm.js';
+import { Specialty } from '../specialty/specialty.entity.js';
 
 const em = orm.em;
 
@@ -31,14 +32,20 @@ function sanitizeDoctorInput(req: Request, res: Response, next: NextFunction) {
 async function findAll(req: Request, res: Response) {
   try {
     if (req.body.specialtyToSearch !== undefined) {
-      const specialtyToSearch = Number.parseInt(req.body.specialtyToSearch);
-      const doctors = await em.find(Doctor, { specialty: specialtyToSearch },  {populate: ['specialty']});
+      const specialtyToSearch = req.body.specialtyToSearch;
+      const specialty = await em.find(Specialty, { name: specialtyToSearch });
+      const id = specialty[0].id;
+      const doctors = await em.find(
+        Doctor,
+        { specialty: id },
+        { populate: ['specialty'] }
+      );
       res.status(200).json({
         message: 'Found all doctors with the specified specialty',
         data: doctors,
       });
     } else {
-      const doctors = await em.find(Doctor, {},{populate: ['specialty']});
+      const doctors = await em.find(Doctor, {}, { populate: ['specialty'] });
       res.status(200).json({ message: 'Found all doctors', data: doctors });
     }
   } catch (error: any) {
@@ -52,7 +59,7 @@ async function findOne(req: Request, res: Response) {
     const doctor = await em.findOneOrFail(
       Doctor,
       { id },
-      {populate: ['specialty']}
+      { populate: ['specialty'] }
     );
     res.status(200).json({ message: 'Found doctor', data: doctor });
   } catch (error: any) {

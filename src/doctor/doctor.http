@@ -7,7 +7,7 @@ GET http://localhost:3000/api/doctors
 Content-Type: application/json
 
 {
-    "specialtyToSearch": 7
+    "specialtyToSearch": "Cirujano"
 }   
 
 
@@ -24,7 +24,7 @@ Content-Type: application/json
     "age":27,
     "tuition_number":56,
     "cod_user": 1,
-    "specialty": 7
+    "specialty": 1
 }
 
 ### ID
