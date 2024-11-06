@@ -10,14 +10,16 @@ export const validateTokenUser = (
   if (headerToken != undefined && headerToken.startsWith('Bearer ')) {
     try {
       const bearerToken = headerToken.slice(7);
-      jwt.verify(
+      const decoded = jwt.verify(
         bearerToken,
-        process.env.SECRET_KEY ||
-          process.env.ADMIN_KEY ||
-          'YoHeBaiteadoConCocodrilos' ||
-          'YoHeJijeado500Jijos'
-      );
-      next();
+        process.env.SECRET_KEY || 'YoHeBaiteadoConCocodrilos'
+      ) as jwt.JwtPayload;
+      if (decoded.cod_user != 0 && decoded.cod_user != 1) {
+        throw new Error('No auth user')
+      }
+      else {
+        next();
+      }
     } catch (error) {
       res.status(401).json({
         message: 'Access Denied',

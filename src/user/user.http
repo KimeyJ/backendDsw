@@ -15,13 +15,13 @@ POST http://localhost:3000/api/users
 Content-Type: application/json
 
 {
-    "dni": "44848809",
-    "firstName": "Kimey",
-    "lastName": "Jeandrevin",
-    "email": "jeandrevink@gmail.com",
-    "password": "contrasenia",
+    "dni": "1234567",
+    "firstName": "a",
+    "lastName": "a",
+    "email": "a@gmail.com",
+    "password": "123",
     "age":21,
-    "cod_user":1
+    "cod_user":2
  }   
 
 ### ID
@@ -48,13 +48,13 @@ POST http://localhost:3000/api/users
 Content-Type: application/json
 
 {
-    "dni": "44848810",
+    "dni": "admin2",
     "firstName": "Ernesto",
     "lastName": "Rodriguez",
     "email": "ERodriguez@gmail.com",
     "password": "123456",
     "age":30,
-    "cod_user": 2
+    "cod_user": 0
 }
 
 ### Login check
@@ -62,6 +62,6 @@ POST http://localhost:3000/api/users/login
 Content-Type: application/json
 
 {
-    "dni": "44848809",
-    "password": "contrasenia"
+    "dni": "44848810",
+    "password": "123456"
 }

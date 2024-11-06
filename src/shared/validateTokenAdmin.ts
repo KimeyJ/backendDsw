@@ -10,8 +10,16 @@ export const validateTokenAdmin = (
   if (headerToken != undefined && headerToken.startsWith('Bearer ')) {
     try {
       const bearerToken = headerToken.slice(7);
-      jwt.verify(bearerToken, process.env.ADMIN_KEY || 'YoHeJijeado500Jijos');
-      next();
+      const decoded = jwt.verify(
+        bearerToken,
+        process.env.SECRET_KEY || 'YoHeBaiteadoConCocodrilos'
+      ) as jwt.JwtPayload;
+      if (decoded.cod_user != 0) {
+        throw new Error('No auth admin');
+      }
+      else {
+        next();
+      }
     } catch (error) {
       res.status(401).json({
         message: 'Access Denied',
