@@ -11,7 +11,7 @@ import { Entity, ManyToOne, } from '@mikro-orm/core';
 import { Follow_up } from '../follow_up/follow_up.entity.js';
 import { Treatment } from '../treatment/treatment.entity.js';
 import { BaseEntity } from '../shared/baseEntity.entity.js';
-export let Followup_treatment = class Followup_treatment extends BaseEntity {
+let Followup_treatment = class Followup_treatment extends BaseEntity {
 };
 __decorate([
     ManyToOne(() => Follow_up, { nullable: false }),
@@ -24,4 +24,5 @@ __decorate([
 Followup_treatment = __decorate([
     Entity()
 ], Followup_treatment);
+export { Followup_treatment };
 //# sourceMappingURL=followup_treatment.entity.js.map

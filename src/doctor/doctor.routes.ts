@@ -14,7 +14,7 @@ export const doctorRouter = Router();
 
 doctorRouter.get('/', validateTokenUser, findAll);
 doctorRouter.get('/:id', validateTokenUser, findOne);
-doctorRouter.post('/', sanitizeDoctorInput, validateTokenAdmin, add);
+doctorRouter.post('/', sanitizeDoctorInput, add);
 doctorRouter.put('/:id', sanitizeDoctorInput, validateTokenAdmin, update);
 doctorRouter.patch('/:id', sanitizeDoctorInput, validateTokenAdmin, update);
 doctorRouter.delete('/:id', validateTokenAdmin, remove);

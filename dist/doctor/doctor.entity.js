@@ -12,7 +12,7 @@ import { BaseEntity } from '../shared/baseEntity.entity.js';
 import { Specialty } from '../specialty/specialty.entity.js';
 import { Appointment } from '../appointment/appointment.entity.js';
 import { Doctor_consulting } from '../doctor_consulting/doctor_consulting.entity.js';
-export let Doctor = class Doctor extends BaseEntity {
+let Doctor = class Doctor extends BaseEntity {
     constructor() {
         super(...arguments);
         this.pendingAppo = new Collection(this);
@@ -62,4 +62,5 @@ __decorate([
 Doctor = __decorate([
     Entity()
 ], Doctor);
+export { Doctor };
 //# sourceMappingURL=doctor.entity.js.map

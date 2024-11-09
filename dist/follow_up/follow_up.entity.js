@@ -11,7 +11,7 @@ import { Entity, Property, Cascade, ManyToOne, Collection, OneToMany, } from '@m
 import { User } from '../user/user.entity.js';
 import { BaseEntity } from '../shared/baseEntity.entity.js';
 import { Followup_treatment } from '../followup_treatment/followup_treatment.entity.js';
-export let Follow_up = class Follow_up extends BaseEntity {
+let Follow_up = class Follow_up extends BaseEntity {
     constructor() {
         super(...arguments);
         this.treatments = new Collection(this);
@@ -38,4 +38,5 @@ __decorate([
 Follow_up = __decorate([
     Entity()
 ], Follow_up);
+export { Follow_up };
 //# sourceMappingURL=follow_up.entity.js.map

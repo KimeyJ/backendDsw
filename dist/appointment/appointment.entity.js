@@ -11,7 +11,7 @@ import { Entity, Property, ManyToOne } from '@mikro-orm/core';
 import { BaseEntity } from '../shared/baseEntity.entity.js';
 import { User } from '../user/user.entity.js';
 import { Doctor } from '../doctor/doctor.entity.js';
-export let Appointment = class Appointment extends BaseEntity {
+let Appointment = class Appointment extends BaseEntity {
 };
 __decorate([
     Property({ nullable: false, unique: false }),
@@ -32,4 +32,5 @@ __decorate([
 Appointment = __decorate([
     Entity()
 ], Appointment);
+export { Appointment };
 //# sourceMappingURL=appointment.entity.js.map

@@ -12,7 +12,7 @@ import { BaseEntity } from '../shared/baseEntity.entity.js';
 import { Consulting } from '../consulting/consulting.entity.js';
 import { Time_table } from '../time_table/time_table.entity.js';
 import { Doctor } from '../doctor/doctor.entity.js';
-export let Doctor_consulting = class Doctor_consulting extends BaseEntity {
+let Doctor_consulting = class Doctor_consulting extends BaseEntity {
     constructor() {
         super(...arguments);
         this.time_tables = new Collection(this);
@@ -39,4 +39,5 @@ __decorate([
 Doctor_consulting = __decorate([
     Entity()
 ], Doctor_consulting);
+export { Doctor_consulting };
 //# sourceMappingURL=doctor_consulting.entity.js.map

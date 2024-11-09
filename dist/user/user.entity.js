@@ -11,7 +11,7 @@ import { Entity, Property, Cascade, OneToMany, Collection, } from '@mikro-orm/co
 import { BaseEntity } from '../shared/baseEntity.entity.js';
 import { Follow_up } from '../follow_up/follow_up.entity.js';
 import { Appointment } from '../appointment/appointment.entity.js';
-export let User = class User extends BaseEntity {
+let User = class User extends BaseEntity {
     constructor() {
         super(...arguments);
         this.follow_up = new Collection(this);
@@ -61,4 +61,5 @@ __decorate([
 User = __decorate([
     Entity()
 ], User);
+export { User };
 //# sourceMappingURL=user.entity.js.map
