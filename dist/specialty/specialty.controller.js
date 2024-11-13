@@ -31,7 +31,7 @@ async function findAll(req, res) {
 async function findOne(req, res) {
     try {
         const id = Number.parseInt(req.params.id);
-        const speacialty = await em.find(Specialty, { id }, { populate: ['doctors'] });
+        const speacialty = await em.find(Specialty, { id });
         res.status(200).json({ message: 'Found speacialty', data: speacialty });
     }
     catch (error) {
