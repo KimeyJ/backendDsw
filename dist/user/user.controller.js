@@ -13,7 +13,7 @@ function sanitizeUserInput(req, res, next) {
         password: req.body.password,
         age: req.body.age,
         tuition_number: req.body.tuition_number,
-        cod_user: req.body.cod_user,
+        codUser: req.body.codUser,
         specialty: req.body.specialty,
         follow_up: req.body.follow_up,
         specialtyToSearch: req.body.specialtyToSearch,
@@ -97,7 +97,7 @@ async function loginUser(req, res) {
             return res.status(400).json({ message: 'La contraseña no es correcta' });
         }
         //const codUser = user.cod_user as Number;
-        const token = jwt.sign({ dni: dni, cod_user: user.cod_user }, process.env.SECRET_KEY || 'YoHeBaiteadoConCocodrilos');
+        const token = jwt.sign({ dni: dni, codUser: user.codUser }, process.env.SECRET_KEY || 'YoHeBaiteadoConCocodrilos');
         res.json({ token });
     }
     catch (error) {

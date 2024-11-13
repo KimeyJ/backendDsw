@@ -45,7 +45,7 @@ __decorate([
 __decorate([
     Property({ nullable: false }),
     __metadata("design:type", Number)
-], User.prototype, "cod_user", void 0);
+], User.prototype, "codUser", void 0);
 __decorate([
     OneToMany(() => Follow_up, (follow_up) => follow_up.patient, {
         cascade: [Cascade.ALL],

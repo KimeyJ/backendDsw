@@ -14,7 +14,7 @@ export const validateTokenAdmin = (
         bearerToken,
         process.env.SECRET_KEY || 'YoHeBaiteadoConCocodrilos'
       ) as jwt.JwtPayload;
-      if (decoded.cod_user != 0) {
+      if (decoded.codUser != 0) {
         throw new Error('No auth admin');
       }
       else {

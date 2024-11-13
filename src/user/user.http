@@ -21,7 +21,7 @@ Content-Type: application/json
     "email": "a@gmail.com",
     "password": "123",
     "age":21,
-    "cod_user":2
+    "codUser":2
  }   
 
 ### ID
@@ -54,7 +54,7 @@ Content-Type: application/json
     "email": "ERodriguez@gmail.com",
     "password": "123456",
     "age":30,
-    "cod_user": 0
+    "codUser": 0
 }
 
 ### Login check

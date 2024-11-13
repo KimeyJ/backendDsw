@@ -23,7 +23,7 @@ Content-Type: application/json
     "password": "contrar",
     "age":27,
     "tuition_number":56,
-    "cod_user": 1,
+    "codUser": 1,
     "specialty": 1
 }
 

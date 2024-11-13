@@ -5,7 +5,7 @@ export const validateTokenAdmin = (req, res, next) => {
         try {
             const bearerToken = headerToken.slice(7);
             const decoded = jwt.verify(bearerToken, process.env.SECRET_KEY || 'YoHeBaiteadoConCocodrilos');
-            if (decoded.cod_user != 0) {
+            if (decoded.codUser != 0) {
                 throw new Error('No auth admin');
             }
             else {

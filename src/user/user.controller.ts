@@ -16,7 +16,7 @@ function sanitizeUserInput(req: Request, res: Response, next: NextFunction) {
     password: req.body.password,
     age: req.body.age,
     tuition_number: req.body.tuition_number,
-    cod_user: req.body.cod_user,
+    codUser: req.body.codUser,
     specialty: req.body.specialty,
     follow_up: req.body.follow_up,
     specialtyToSearch: req.body.specialtyToSearch,
@@ -104,7 +104,7 @@ async function loginUser(req: Request, res: Response) {
     }
     //const codUser = user.cod_user as Number;
       const token = jwt.sign(
-        { dni: dni, cod_user: user.cod_user },
+        { dni: dni, codUser: user.codUser },
         process.env.SECRET_KEY || 'YoHeBaiteadoConCocodrilos'
       );
       res.json({ token });

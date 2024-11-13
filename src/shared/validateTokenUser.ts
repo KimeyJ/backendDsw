@@ -14,7 +14,7 @@ export const validateTokenUser = (
         bearerToken,
         process.env.SECRET_KEY || 'YoHeBaiteadoConCocodrilos'
       ) as jwt.JwtPayload;
-      if (decoded.cod_user != 0 && decoded.cod_user != 1) {
+      if (decoded.codUser != 0 && decoded.codUser != 1) {
         throw new Error('No auth user')
       }
       else {

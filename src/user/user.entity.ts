@@ -36,7 +36,7 @@ export class User extends BaseEntity {
   age!: number;
 
   @Property({ nullable: false })
-  cod_user!: number;
+  codUser!: number;
 
   @OneToMany(() => Follow_up, (follow_up) => follow_up.patient, {
     cascade: [Cascade.ALL],

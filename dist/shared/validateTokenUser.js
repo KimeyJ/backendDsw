@@ -5,7 +5,7 @@ export const validateTokenUser = (req, res, next) => {
         try {
             const bearerToken = headerToken.slice(7);
             const decoded = jwt.verify(bearerToken, process.env.SECRET_KEY || 'YoHeBaiteadoConCocodrilos');
-            if (decoded.cod_user != 0 && decoded.cod_user != 1) {
+            if (decoded.codUser != 0 && decoded.codUser != 1) {
                 throw new Error('No auth user');
             }
             else {
