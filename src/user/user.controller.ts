@@ -93,14 +93,14 @@ async function loginUser(req: Request, res: Response) {
     const dni = req.body.dni as string;
     const password = req.body.password;
     const users = await em.find(User, { dni: dni });
-    if (users === undefined) {
-      return res.status(400).json({ message: 'User doesnt exist' });
+    if (users[0] === undefined) {
+      return res.status(400).json({ message: 'Usuario no registrado' });
     }
     //res.json({ users });
     const user = users[0];
     const passwordCheck = await bcrypt.compare(password, user.password);
     if (!passwordCheck) {
-      return res.status(400).json({ message: 'Password is incorrect' });
+      return res.status(400).json({ message: 'La contraseña no es correcta' });
     }
     //const codUser = user.cod_user as Number;
       const token = jwt.sign(

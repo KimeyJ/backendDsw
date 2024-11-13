@@ -45,7 +45,9 @@ async function findAll(req: Request, res: Response) {
         data: doctors,
       });
     } else {
-      const doctors = await em.find(Doctor, {}, { populate: ['specialty'] });
+      const doctors = await em.find(Doctor, {}, 
+        { populate: ['specialty'] }
+      );
       res.status(200).json({ message: 'Found all doctors', data: doctors });
     }
   } catch (error: any) {

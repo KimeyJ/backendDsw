@@ -48,7 +48,7 @@ async function findOne(req: Request, res: Response) {
     const speacialty = await em.find(
       Specialty,
       { id },
-      { populate: ['doctors'] }
+      //{ populate: ['doctors'] }
     );
     res.status(200).json({ message: 'Found speacialty', data: speacialty });
   } catch (error: any) {
