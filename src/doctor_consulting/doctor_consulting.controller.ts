@@ -1,6 +1,8 @@
 import { Request, Response, NextFunction } from 'express';
 import { Doctor_consulting } from './doctor_consulting.entity.js';
 import { orm } from '../shared/orm.js';
+import { Specialty } from '../specialty/specialty.entity.js';
+import { PopulateHint } from '@mikro-orm/core';
 
 const em = orm.em;
 
@@ -15,6 +17,7 @@ function sanitizeDoctorConsultingInput(
     doctor: req.body.doctor,
     consulting: req.body.consulting,
     time_tables: req.body.time_tables,
+    specialtyToSearch: req.body.specialtyToSearch,
   };
 
   Object.keys(req.body.sanitizedInput).forEach((key) => {
@@ -28,17 +31,35 @@ function sanitizeDoctorConsultingInput(
 
 async function findAll(req: Request, res: Response) {
   try {
-    const doctor_consultings = await em.find(
-      Doctor_consulting,
-      {},
-      {
-        populate: ['doctor', 'consulting'],
-      }
-    );
-    res.status(200).json({
-      message: 'Found all doctor consultings',
-      data: doctor_consultings,
-    });
+    if (req.body.specialtyToSearch !== undefined) {
+      const specialtyToSearch = req.body.specialtyToSearch;
+      const specialty = await em.find(Specialty, { name: specialtyToSearch });
+      const id = specialty[0].id;
+      const doctor_consultings = await em.find(
+        Doctor_consulting,
+        { doctor: { specialty: { id } } },
+        {
+          populateWhere: PopulateHint.INFER,
+          populate: ['doctor', 'consulting', 'doctor.specialty'],
+        }
+      );
+      res.status(200).json({
+        message: 'Found all doctors with the specified specialty',
+        data: doctor_consultings,
+      });
+    } else {
+      const doctor_consultings = await em.find(
+        Doctor_consulting,
+        {},
+        {
+          populate: ['doctor', 'consulting', 'doctor.specialty'],
+        }
+      );
+      res.status(200).json({
+        message: 'Found all doctor consultings',
+        data: doctor_consultings,
+      });
+    }
   } catch (error: any) {
     res.status(500).json({ message: error.message });
   }
