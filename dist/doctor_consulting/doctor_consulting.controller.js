@@ -19,7 +19,7 @@ function sanitizeDoctorConsultingInput(req, res, next) {
 async function findAll(req, res) {
     try {
         const doctor_consultings = await em.find(Doctor_consulting, {}, {
-            populate: ['doctor', 'consulting'],
+            populate: ['doctor', 'consulting', 'doctor.specialty'],
         });
         res.status(200).json({
             message: 'Found all doctor consultings',
@@ -34,7 +34,7 @@ async function findOne(req, res) {
     try {
         const id = Number.parseInt(req.params.id);
         const doctor_consultings = await em.find(Doctor_consulting, { id }, {
-            populate: ['doctor', 'consulting'],
+            populate: ['doctor', 'consulting', 'doctor.specialty'],
         });
         res
             .status(200)
