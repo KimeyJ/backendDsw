@@ -8,6 +8,7 @@ function sanitizeDoctorConsultingInput(req, res, next) {
         doctor: req.body.doctor,
         consulting: req.body.consulting,
         time_tables: req.body.time_tables,
+        specialtyToSearch: req.body.specialtyToSearch,
     };
     Object.keys(req.body.sanitizedInput).forEach((key) => {
         if (req.body.sanitizedInput[key] === undefined) {

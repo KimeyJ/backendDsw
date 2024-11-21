@@ -13,7 +13,7 @@ function sanitizeAppointmentInput(
     id: req.body.id,
     appoDate: req.body.appoDate,
     assisted: req.body.assisted,
-    doctor: req.body.doctor,
+    doctor_consulting: req.body.doctor_consulting,
     patient: req.body.patient,
   };
 
@@ -32,7 +32,7 @@ async function findAll(req: Request, res: Response) {
       Appointment,
       {},
       {
-        populate: ['doctor', 'patient'],
+        populate: ['doctor_consulting', 'patient'],
       }
     );
     res
@@ -50,7 +50,7 @@ async function findOne(req: Request, res: Response) {
       Appointment,
       { id },
       {
-        populate: ['doctor', 'patient'],
+        populate: ['doctor_consulting', 'patient'],
       }
     );
     res.status(200).json({ message: 'Found appointment', data: appointment });

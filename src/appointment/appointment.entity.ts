@@ -1,7 +1,7 @@
 import { Entity, Property, Collection, ManyToOne, Rel } from '@mikro-orm/core';
 import { BaseEntity } from '../shared/baseEntity.entity.js';
 import { User } from '../user/user.entity.js';
-import { Doctor } from '../doctor/doctor.entity.js';
+import { Doctor_consulting } from '../doctor_consulting/doctor_consulting.entity.js';
 
 @Entity()
 export class Appointment extends BaseEntity {
@@ -9,8 +9,8 @@ export class Appointment extends BaseEntity {
   appoDate!: Date;
   @Property({ nullable: true, unique: false })
   assisted!: boolean;
-  @ManyToOne(() => Doctor, { nullable: false })
-  doctor!: Rel<Doctor>;
+  @ManyToOne(() => Doctor_consulting, { nullable: false })
+  doctor_consulting!: Rel<Doctor_consulting>;
   @ManyToOne(() => User, { nullable: false })
   patient!: Rel<User>;
 }

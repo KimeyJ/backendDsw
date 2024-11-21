@@ -10,12 +10,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 import { Entity, Property, ManyToOne, OneToMany, Cascade, Collection } from '@mikro-orm/core';
 import { BaseEntity } from '../shared/baseEntity.entity.js';
 import { Specialty } from '../specialty/specialty.entity.js';
-import { Appointment } from '../appointment/appointment.entity.js';
 import { Doctor_consulting } from '../doctor_consulting/doctor_consulting.entity.js';
 let Doctor = class Doctor extends BaseEntity {
     constructor() {
         super(...arguments);
-        this.pendingAppo = new Collection(this);
+        /*@OneToMany(() => Appointment, (appointment) => appointment.doctor, {
+        cascade: [Cascade.ALL],})
+        pendingAppo = new Collection<Appointment>(this);*/
         this.consultings = new Collection(this);
     }
 };
@@ -47,12 +48,6 @@ __decorate([
     ManyToOne(() => Specialty, { nullable: false }),
     __metadata("design:type", Object)
 ], Doctor.prototype, "specialty", void 0);
-__decorate([
-    OneToMany(() => Appointment, (appointment) => appointment.doctor, {
-        cascade: [Cascade.ALL],
-    }),
-    __metadata("design:type", Object)
-], Doctor.prototype, "pendingAppo", void 0);
 __decorate([
     OneToMany(() => Doctor_consulting, (doctor_consulting) => doctor_consulting.doctor, {
         cascade: [Cascade.ALL],

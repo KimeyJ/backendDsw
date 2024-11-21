@@ -30,9 +30,9 @@ import { Doctor_consulting } from '../doctor_consulting/doctor_consulting.entity
     @ManyToOne(() => Specialty, { nullable: false })
     specialty!: Rel<Specialty>;
 
-    @OneToMany(() => Appointment, (appointment) => appointment.doctor, {
+    /*@OneToMany(() => Appointment, (appointment) => appointment.doctor, {
     cascade: [Cascade.ALL],})
-    pendingAppo = new Collection<Appointment>(this);
+    pendingAppo = new Collection<Appointment>(this);*/
 
     @OneToMany(() => Doctor_consulting,
     (doctor_consulting) => doctor_consulting.doctor,
