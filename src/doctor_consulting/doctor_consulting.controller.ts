@@ -35,7 +35,7 @@ async function findAll(req: Request, res: Response) {
       Doctor_consulting,
       {},
       {
-        populate: ['doctor', 'consulting','doctor.specialty'],
+        populate: ['doctor', 'consulting', 'doctor.specialty'],
       }
     );
     res.status(200).json({
@@ -108,4 +108,28 @@ async function remove(req: Request, res: Response) {
   }
 }
 
-export { sanitizeDoctorConsultingInput, findAll, findOne, add, update, remove };
+async function filterAll(req: Request, res: Response) {
+  try {
+    const specialty = await em.find(Specialty, { name: req.params.name });
+    const id = specialty[0].id;
+    const doctor_consultings = await em.find(
+        Doctor_consulting,
+        { doctor: { specialty: { id } } },
+        {
+          populateWhere: PopulateHint.INFER,
+          populate: ['doctor', 'consulting', 'doctor.specialty'],
+        }
+      );
+      res.status(200).json({
+        message: 'Found all doctors with the specified specialty',
+        data: doctor_consultings,
+      });
+  }
+  catch (error: any) {
+    res.status(500).json({message: error.message});
+  }
+}
+
+
+
+export { sanitizeDoctorConsultingInput, findAll, findOne, add, update, remove, filterAll };

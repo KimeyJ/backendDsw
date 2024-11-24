@@ -1,5 +1,7 @@
 import { Doctor_consulting } from './doctor_consulting.entity.js';
 import { orm } from '../shared/orm.js';
+import { Specialty } from '../specialty/specialty.entity.js';
+import { PopulateHint } from '@mikro-orm/core';
 const em = orm.em;
 function sanitizeDoctorConsultingInput(req, res, next) {
     req.body.sanitizedInput = {
@@ -85,5 +87,22 @@ async function remove(req, res) {
         res.status(500).json({ message: error.message });
     }
 }
-export { sanitizeDoctorConsultingInput, findAll, findOne, add, update, remove };
+async function filterAll(req, res) {
+    try {
+        const specialty = await em.find(Specialty, { name: req.params.name });
+        const id = specialty[0].id;
+        const doctor_consultings = await em.find(Doctor_consulting, { doctor: { specialty: { id } } }, {
+            populateWhere: PopulateHint.INFER,
+            populate: ['doctor', 'consulting', 'doctor.specialty'],
+        });
+        res.status(200).json({
+            message: 'Found all doctors with the specified specialty',
+            data: doctor_consultings,
+        });
+    }
+    catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+export { sanitizeDoctorConsultingInput, findAll, findOne, add, update, remove, filterAll };
 //# sourceMappingURL=doctor_consulting.controller.js.map

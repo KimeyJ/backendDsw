@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { sanitizeDoctorConsultingInput, findAll, findOne, add, update, remove, } from './doctor_consulting.controller.js';
+import { sanitizeDoctorConsultingInput, findAll, findOne, add, update, remove, filterAll } from './doctor_consulting.controller.js';
 import { validateTokenAdmin } from '../shared/validateTokenAdmin.js';
 import { validateTokenUser } from '../shared/validateTokenUser.js';
 export const doctor_consultingRouter = Router();
@@ -9,4 +9,5 @@ doctor_consultingRouter.post('/', sanitizeDoctorConsultingInput, validateTokenAd
 doctor_consultingRouter.put('/:id', sanitizeDoctorConsultingInput, validateTokenAdmin, update);
 doctor_consultingRouter.patch('/:id', sanitizeDoctorConsultingInput, validateTokenAdmin, update);
 doctor_consultingRouter.delete('/:id', validateTokenAdmin, remove);
+doctor_consultingRouter.get('/search/:name', validateTokenUser, filterAll);
 //# sourceMappingURL=doctor_consulting.routes.js.map

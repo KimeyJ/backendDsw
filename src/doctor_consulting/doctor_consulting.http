@@ -28,3 +28,8 @@ Content-Type: application/json
 
 ### Delete one DC
 DELETE http://localhost:3000/api/doctor_consultings/{{id}}
+
+@name = 'Cardiologo'
+
+### Get all DC
+GET http://localhost:3000/api/doctor_consultings/{{name}}
