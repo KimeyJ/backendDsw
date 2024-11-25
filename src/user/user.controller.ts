@@ -104,7 +104,7 @@ async function loginUser(req: Request, res: Response) {
     }
     //const codUser = user.cod_user as Number;
       const token = jwt.sign(
-        { dni: dni, codUser: user.codUser },
+        {id: user.id, dni: dni, codUser: user.codUser },
         process.env.SECRET_KEY || 'YoHeBaiteadoConCocodrilos'
       );
       res.json({ token });

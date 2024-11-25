@@ -9,7 +9,7 @@ Content-Type: application/json
     "specialtyToSearch": 2
 }   
 
-### Create an user
+### Create a user
 # @name createUser
 POST http://localhost:3000/api/users
 Content-Type: application/json

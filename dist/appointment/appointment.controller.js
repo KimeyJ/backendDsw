@@ -5,6 +5,7 @@ function sanitizeAppointmentInput(req, res, next) {
     req.body.sanitizedInput = {
         id: req.body.id,
         appoDate: req.body.appoDate,
+        appoTime: req.body.appoTime,
         assisted: req.body.assisted,
         doctor_consulting: req.body.doctor_consulting,
         patient: req.body.patient,
@@ -44,6 +45,7 @@ async function findOne(req, res) {
 async function add(req, res) {
     try {
         const appointment = em.create(Appointment, req.body.sanitizedInput);
+        appointment.appoTime = new Date(`1970-01-01T${req.body.sanitizedInput.appoTime}`);
         await em.flush();
         res.status(201).json({ message: 'Appointment created', data: appointment });
     }

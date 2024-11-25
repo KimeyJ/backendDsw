@@ -7,10 +7,11 @@ POST http://localhost:3000/api/appointments
 Content-Type: application/json
 
 {
-    "appoDate": "04-12-2023",
+    "appoDate": "2023-12-04",
+    "appoTime": "16:00:00",
     "assisted": false,
-    "doctor": 1,
-    "patient": 2
+    "doctor_consulting": 2,
+    "patient": 32
 }
 
 ### ID

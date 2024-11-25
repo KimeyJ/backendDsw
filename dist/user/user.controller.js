@@ -97,7 +97,7 @@ async function loginUser(req, res) {
             return res.status(400).json({ message: 'La contraseña no es correcta' });
         }
         //const codUser = user.cod_user as Number;
-        const token = jwt.sign({ dni: dni, codUser: user.codUser }, process.env.SECRET_KEY || 'YoHeBaiteadoConCocodrilos');
+        const token = jwt.sign({ id: user.id, dni: dni, codUser: user.codUser }, process.env.SECRET_KEY || 'YoHeBaiteadoConCocodrilos');
         res.json({ token });
     }
     catch (error) {
