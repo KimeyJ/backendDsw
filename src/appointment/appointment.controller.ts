@@ -100,7 +100,7 @@ async function remove(req: Request, res: Response) {
 async function filterAll(req: Request, res: Response) {
   try {
     const appointments = await em.find (Appointment, {patient : {dni : req.params.dni}},{
-          populateWhere: PopulateHint.INFER, populate: ['doctor_consulting','doctor_consulting.doctor','doctor_consulting.consulting']
+          populateWhere: PopulateHint.INFER, populate: ['doctor_consulting','doctor_consulting.doctor','doctor_consulting.consulting', 'doctor_consulting.doctor.specialty']
     })
     res.status(200).json({message: 'Found all appointments of the user',data: appointments});
   }
