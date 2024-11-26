@@ -19,7 +19,7 @@ __decorate([
 ], Appointment.prototype, "appoDate", void 0);
 __decorate([
     Property({ type: 'time', nullable: false, unique: false }),
-    __metadata("design:type", Date)
+    __metadata("design:type", String)
 ], Appointment.prototype, "appoTime", void 0);
 __decorate([
     Property({ nullable: true, unique: false }),

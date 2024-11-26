@@ -6,6 +6,7 @@ import {
   add,
   update,
   remove,
+  filterAll
 } from './appointment.controller.js';
 ;
 import { validateTokenUser } from '../shared/validateTokenUser.js';
@@ -18,3 +19,4 @@ appointmentRouter.post('/', sanitizeAppointmentInput, add);
 appointmentRouter.put('/:id',sanitizeAppointmentInput,validateTokenUser,update);
 appointmentRouter.patch('/:id',sanitizeAppointmentInput,validateTokenUser,update);
 appointmentRouter.delete('/:id', validateTokenUser, remove);
+appointmentRouter.get('/search/:dni', validateTokenUser,filterAll)

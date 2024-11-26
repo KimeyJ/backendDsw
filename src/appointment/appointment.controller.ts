@@ -1,6 +1,8 @@
 import { Request, Response, NextFunction } from 'express';
 import { Appointment } from './appointment.entity.js';
 import { orm } from '../shared/orm.js';
+import { PopulateHint } from '@mikro-orm/core';
+
 
 const em = orm.em;
 
@@ -63,7 +65,6 @@ async function findOne(req: Request, res: Response) {
 async function add(req: Request, res: Response) {
   try {
     const appointment = em.create(Appointment, req.body.sanitizedInput);
-    appointment.appoTime = new Date(`1970-01-01T${req.body.sanitizedInput.appoTime}`);
     await em.flush();
     res.status(201).json({ message: 'Appointment created', data: appointment });
   } catch (error: any) {
@@ -96,4 +97,16 @@ async function remove(req: Request, res: Response) {
   }
 }
 
-export { sanitizeAppointmentInput, findAll, findOne, add, update, remove };
+async function filterAll(req: Request, res: Response) {
+  try {
+    const appointments = await em.find (Appointment, {patient : {dni : req.params.dni}},{
+          populateWhere: PopulateHint.INFER, populate: ['doctor_consulting','doctor_consulting.doctor','doctor_consulting.consulting']
+    })
+    res.status(200).json({message: 'Found all appointments of the user',data: appointments});
+  }
+   catch (error:any) {
+    res.status(500).json({message: error.message})
+   }
+}
+
+export { sanitizeAppointmentInput, findAll, findOne, add, update, remove, filterAll };
