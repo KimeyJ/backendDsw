@@ -15,7 +15,7 @@ export const doctor_consultingRouter = Router();
 
 doctor_consultingRouter.get('/', validateTokenUser, findAll);
 doctor_consultingRouter.get('/:id', validateTokenUser, findOne);
-doctor_consultingRouter.post('/',sanitizeDoctorConsultingInput,validateTokenAdmin,add);
+doctor_consultingRouter.post('/',sanitizeDoctorConsultingInput, validateTokenAdmin, add);
 doctor_consultingRouter.put('/:id',sanitizeDoctorConsultingInput,validateTokenAdmin,update);
 doctor_consultingRouter.patch('/:id',sanitizeDoctorConsultingInput,validateTokenAdmin,update);
 doctor_consultingRouter.delete('/:id', validateTokenAdmin, remove);

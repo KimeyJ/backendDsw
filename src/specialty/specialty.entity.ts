@@ -13,9 +13,6 @@ export class Specialty extends BaseEntity {
   @Property({ nullable: false, unique: true })
   name!: string;
 
-  @Property({ nullable: false, type: 'decimal', precision: 10, scale: 4 })
-  price!: number;
-
   @OneToMany(() => Doctor, (doctor) => doctor.specialty, {
     cascade: [Cascade.ALL],
   })

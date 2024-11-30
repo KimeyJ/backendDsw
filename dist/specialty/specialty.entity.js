@@ -21,10 +21,6 @@ __decorate([
     __metadata("design:type", String)
 ], Specialty.prototype, "name", void 0);
 __decorate([
-    Property({ nullable: false, type: 'decimal', precision: 10, scale: 4 }),
-    __metadata("design:type", Number)
-], Specialty.prototype, "price", void 0);
-__decorate([
     OneToMany(() => Doctor, (doctor) => doctor.specialty, {
         cascade: [Cascade.ALL],
     }),

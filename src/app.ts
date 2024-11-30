@@ -22,6 +22,7 @@ app.use(cors());
 app.use((req, res, next) => {
   RequestContext.create(orm.em, next);
 });
+
 /*
 app.use(function (req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');
