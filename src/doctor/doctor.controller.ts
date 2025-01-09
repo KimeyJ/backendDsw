@@ -14,6 +14,7 @@ function sanitizeDoctorInput(req: Request, res: Response, next: NextFunction) {
     password: req.body.password,
     age: req.body.age,
     tuition_number: req.body.tuition_number,
+    vigency: req.body.vigency,
     specialty: req.body.specialty,
     pendingAppo: req.body.pendingAppo,
     consultings: req.body.consultings,
@@ -45,9 +46,7 @@ async function findAll(req: Request, res: Response) {
         data: doctors,
       });
     } else {
-      const doctors = await em.find(Doctor, {}, 
-        { populate: ['specialty'] }
-      );
+      const doctors = await em.find(Doctor, {}, { populate: ['specialty'] });
       res.status(200).json({ message: 'Found all doctors', data: doctors });
     }
   } catch (error: any) {

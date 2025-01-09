@@ -54,7 +54,7 @@ async function findOne(req: Request, res: Response) {
       Doctor_consulting,
       { id },
       {
-        populate: ['doctor', 'consulting','doctor.specialty'],
+        populate: ['doctor', 'consulting', 'doctor.specialty'],
       }
     );
     res
@@ -113,23 +113,28 @@ async function filterAll(req: Request, res: Response) {
     const specialty = await em.find(Specialty, { name: req.params.name });
     const id = specialty[0].id;
     const doctor_consultings = await em.find(
-        Doctor_consulting,
-        { doctor: { specialty: { id } } },
-        {
-          populateWhere: PopulateHint.INFER,
-          populate: ['doctor', 'consulting', 'doctor.specialty'],
-        }
-      );
-      res.status(200).json({
-        message: 'Found all doctors with the specified specialty',
-        data: doctor_consultings,
-      });
-  }
-  catch (error: any) {
-    res.status(500).json({message: error.message});
+      Doctor_consulting,
+      { doctor: { specialty: { id } }, vigency: true },
+      {
+        populateWhere: PopulateHint.INFER,
+        populate: ['doctor', 'consulting', 'doctor.specialty'],
+      }
+    );
+    res.status(200).json({
+      message: 'Found all doctors with the specified specialty',
+      data: doctor_consultings,
+    });
+  } catch (error: any) {
+    res.status(500).json({ message: error.message });
   }
 }
 
-
-
-export { sanitizeDoctorConsultingInput, findAll, findOne, add, update, remove, filterAll };
+export {
+  sanitizeDoctorConsultingInput,
+  findAll,
+  findOne,
+  add,
+  update,
+  remove,
+  filterAll,
+};

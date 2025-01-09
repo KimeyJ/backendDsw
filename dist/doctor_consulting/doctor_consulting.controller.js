@@ -91,7 +91,7 @@ async function filterAll(req, res) {
     try {
         const specialty = await em.find(Specialty, { name: req.params.name });
         const id = specialty[0].id;
-        const doctor_consultings = await em.find(Doctor_consulting, { doctor: { specialty: { id } } }, {
+        const doctor_consultings = await em.find(Doctor_consulting, { doctor: { specialty: { id } }, vigency: true }, {
             populateWhere: PopulateHint.INFER,
             populate: ['doctor', 'consulting', 'doctor.specialty'],
         });
@@ -104,5 +104,5 @@ async function filterAll(req, res) {
         res.status(500).json({ message: error.message });
     }
 }
-export { sanitizeDoctorConsultingInput, findAll, findOne, add, update, remove, filterAll };
+export { sanitizeDoctorConsultingInput, findAll, findOne, add, update, remove, filterAll, };
 //# sourceMappingURL=doctor_consulting.controller.js.map

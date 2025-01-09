@@ -3,7 +3,6 @@ import { Appointment } from './appointment.entity.js';
 import { orm } from '../shared/orm.js';
 import { PopulateHint } from '@mikro-orm/core';
 
-
 const em = orm.em;
 
 function sanitizeAppointmentInput(
@@ -99,14 +98,63 @@ async function remove(req: Request, res: Response) {
 
 async function filterAll(req: Request, res: Response) {
   try {
-    const appointments = await em.find (Appointment, {patient : {dni : req.params.dni}},{
-          populateWhere: PopulateHint.INFER, populate: ['doctor_consulting','doctor_consulting.doctor','doctor_consulting.consulting', 'doctor_consulting.doctor.specialty']
-    })
-    res.status(200).json({message: 'Found all appointments of the user',data: appointments});
+    const appointments = await em.find(
+      Appointment,
+      { patient: { dni: req.params.dni } },
+      {
+        populateWhere: PopulateHint.INFER,
+        populate: [
+          'doctor_consulting',
+          'doctor_consulting.doctor',
+          'doctor_consulting.consulting',
+          'doctor_consulting.doctor.specialty',
+        ],
+      }
+    );
+    res
+      .status(200)
+      .json({
+        message: 'Found all appointments of the user',
+        data: appointments,
+      });
+  } catch (error: any) {
+    res.status(500).json({ message: error.message });
   }
-   catch (error:any) {
-    res.status(500).json({message: error.message})
-   }
 }
 
-export { sanitizeAppointmentInput, findAll, findOne, add, update, remove, filterAll };
+async function filterDoctor(req: Request, res: Response) {
+  try {
+    const id = Number.parseInt(req.params.id);
+    const appointments = await em.find(
+      Appointment,
+      { doctor_consulting: { doctor: id } },
+      {
+        populateWhere: PopulateHint.INFER,
+        populate: [
+          'doctor_consulting',
+          'doctor_consulting.consulting',
+          'patient',
+        ],
+      }
+    );
+    res
+      .status(200)
+      .json({
+        message: 'Found all appointments of the doctor',
+        data: appointments,
+      });
+  } catch (error: any) {
+    res.status(500).json({ message: error.message });
+  }
+}
+
+export {
+  sanitizeAppointmentInput,
+  findAll,
+  findOne,
+  add,
+  update,
+  remove,
+  filterAll,
+  filterDoctor,
+};

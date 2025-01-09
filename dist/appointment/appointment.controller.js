@@ -81,13 +81,46 @@ async function remove(req, res) {
 async function filterAll(req, res) {
     try {
         const appointments = await em.find(Appointment, { patient: { dni: req.params.dni } }, {
-            populateWhere: PopulateHint.INFER, populate: ['doctor_consulting', 'doctor_consulting.doctor', 'doctor_consulting.consulting', 'doctor_consulting.doctor.specialty']
+            populateWhere: PopulateHint.INFER,
+            populate: [
+                'doctor_consulting',
+                'doctor_consulting.doctor',
+                'doctor_consulting.consulting',
+                'doctor_consulting.doctor.specialty',
+            ],
         });
-        res.status(200).json({ message: 'Found all appointments of the user', data: appointments });
+        res
+            .status(200)
+            .json({
+            message: 'Found all appointments of the user',
+            data: appointments,
+        });
     }
     catch (error) {
         res.status(500).json({ message: error.message });
     }
 }
-export { sanitizeAppointmentInput, findAll, findOne, add, update, remove, filterAll };
+async function filterDoctor(req, res) {
+    try {
+        const id = Number.parseInt(req.params.id);
+        const appointments = await em.find(Appointment, { doctor_consulting: { doctor: id } }, {
+            populateWhere: PopulateHint.INFER,
+            populate: [
+                'doctor_consulting',
+                'doctor_consulting.consulting',
+                'patient',
+            ],
+        });
+        res
+            .status(200)
+            .json({
+            message: 'Found all appointments of the doctor',
+            data: appointments,
+        });
+    }
+    catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+export { sanitizeAppointmentInput, findAll, findOne, add, update, remove, filterAll, filterDoctor, };
 //# sourceMappingURL=appointment.controller.js.map

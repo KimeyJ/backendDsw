@@ -18,6 +18,8 @@ export class Treatment extends BaseEntity {
   description!: string;
   @Property({ nullable: false, type: 'decimal', precision: 10, scale: 4 })
   price!: number;
+  @Property({ nullable: false, default: true })
+  vigency!: boolean;
   @OneToMany(
     () => Followup_treatment,
     (followup_treatment) => followup_treatment.treatment,

@@ -19,7 +19,10 @@ let Doctor_consulting = class Doctor_consulting extends BaseEntity {
     }
 };
 __decorate([
-    Property(),
+    Property()
+    //True -> el doctor sigue atendiendo en ese consultorio
+    //False -> el doctor no sigue atendiendo en ese consultorio
+    ,
     __metadata("design:type", Boolean)
 ], Doctor_consulting.prototype, "vigency", void 0);
 __decorate([

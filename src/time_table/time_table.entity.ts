@@ -4,11 +4,11 @@ import { Doctor_consulting } from '../doctor_consulting/doctor_consulting.entity
 
 @Entity()
 export class Time_table extends BaseEntity {
-  @Property({ nullable: false })
-  dayTime!: string;
+  @Property({ type: 'time', nullable: false, unique: false })
+  consultationTime!: String;
 
-  @Property({ nullable: false })
-  vigDate!: Date;
+  @Property({ nullable: false, unique: false })
+  vigency!: boolean;
 
   @ManyToOne(() => Doctor_consulting, { nullable: false })
   doctor_consulting!: Rel<Doctor_consulting>;
