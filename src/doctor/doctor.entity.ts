@@ -32,6 +32,9 @@ export class Doctor extends BaseEntity {
   @Property({ nullable: false, unique: true })
   tuition_number!: number;
 
+  @Property({ nullable: false })
+  codUser!: number;
+
   @Property({ nullable: false, default: true })
   vigency!: boolean;
 

@@ -102,7 +102,7 @@ async function filterAll(req, res) {
 }
 async function filterDoctor(req, res) {
     try {
-        const id = Number.parseInt(req.params.id);
+        const id = Number.parseInt(req.params.tuitNumber);
         const appointments = await em.find(Appointment, { doctor_consulting: { doctor: id } }, {
             populateWhere: PopulateHint.INFER,
             populate: [

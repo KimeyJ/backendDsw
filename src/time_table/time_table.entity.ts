@@ -4,6 +4,9 @@ import { Doctor_consulting } from '../doctor_consulting/doctor_consulting.entity
 
 @Entity()
 export class Time_table extends BaseEntity {
+  @Property({ nullable: false, unique: false })
+  consultationDate!: Date;
+
   @Property({ type: 'time', nullable: false, unique: false })
   consultationTime!: String;
 

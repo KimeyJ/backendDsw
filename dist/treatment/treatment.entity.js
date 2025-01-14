@@ -29,6 +29,10 @@ __decorate([
     __metadata("design:type", Number)
 ], Treatment.prototype, "price", void 0);
 __decorate([
+    Property({ nullable: false, default: true }),
+    __metadata("design:type", Boolean)
+], Treatment.prototype, "vigency", void 0);
+__decorate([
     OneToMany(() => Followup_treatment, (followup_treatment) => followup_treatment.treatment, {
         cascade: [Cascade.ALL],
     }),

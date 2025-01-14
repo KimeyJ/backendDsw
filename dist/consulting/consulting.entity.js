@@ -25,6 +25,10 @@ __decorate([
     __metadata("design:type", Number)
 ], Consulting.prototype, "street_number", void 0);
 __decorate([
+    Property({ nullable: false, default: true }),
+    __metadata("design:type", Boolean)
+], Consulting.prototype, "vigency", void 0);
+__decorate([
     OneToMany(() => Doctor_consulting, (doctor_consulting) => doctor_consulting.consulting, {
         cascade: [Cascade.ALL],
     }),

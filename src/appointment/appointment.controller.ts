@@ -124,7 +124,7 @@ async function filterAll(req: Request, res: Response) {
 
 async function filterDoctor(req: Request, res: Response) {
   try {
-    const id = Number.parseInt(req.params.id);
+    const id = Number.parseInt(req.params.tuitNumber);
     const appointments = await em.find(
       Appointment,
       { doctor_consulting: { doctor: id } },

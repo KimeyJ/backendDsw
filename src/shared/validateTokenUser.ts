@@ -14,7 +14,7 @@ export const validateTokenUser = (
         bearerToken,
         process.env.SECRET_KEY || 'YoHeBaiteadoConCocodrilos'
       ) as jwt.JwtPayload;
-      if (decoded.codUser != 0 && decoded.codUser != 1) {
+      if (decoded.codUser != 0 && decoded.codUser != 1 && decoded.codUser != 2) {
         throw new Error('No auth user')
       }
       else {
@@ -22,7 +22,7 @@ export const validateTokenUser = (
       }
     } catch (error) {
       res.status(401).json({
-        message: 'Access Denied',
+        message: 'Access Denied boludon',
       });
     }
   } else {

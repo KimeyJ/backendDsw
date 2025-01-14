@@ -13,13 +13,17 @@ import { Doctor_consulting } from '../doctor_consulting/doctor_consulting.entity
 let Time_table = class Time_table extends BaseEntity {
 };
 __decorate([
-    Property({ nullable: false }),
-    __metadata("design:type", String)
-], Time_table.prototype, "dayTime", void 0);
-__decorate([
-    Property({ nullable: false }),
+    Property({ nullable: false, unique: false }),
     __metadata("design:type", Date)
-], Time_table.prototype, "vigDate", void 0);
+], Time_table.prototype, "consultationDate", void 0);
+__decorate([
+    Property({ type: 'time', nullable: false, unique: false }),
+    __metadata("design:type", String)
+], Time_table.prototype, "consultationTime", void 0);
+__decorate([
+    Property({ nullable: false, unique: false }),
+    __metadata("design:type", Boolean)
+], Time_table.prototype, "vigency", void 0);
 __decorate([
     ManyToOne(() => Doctor_consulting, { nullable: false }),
     __metadata("design:type", Object)

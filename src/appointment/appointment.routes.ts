@@ -30,4 +30,4 @@ appointmentRouter.patch(
 );
 appointmentRouter.delete('/:id', validateTokenUser, remove);
 appointmentRouter.get('/search/:dni', validateTokenUser, filterAll);
-appointmentRouter.get('/searchDoc/:id', validateTokenUser, filterDoctor);
+//appointmentRouter.get('/searchDoc/:tuitNumber', validateTokenUser, filterDoctor);

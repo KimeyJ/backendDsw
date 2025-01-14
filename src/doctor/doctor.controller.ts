@@ -14,6 +14,7 @@ function sanitizeDoctorInput(req: Request, res: Response, next: NextFunction) {
     password: req.body.password,
     age: req.body.age,
     tuition_number: req.body.tuition_number,
+    codUser: req.body.codUser,
     vigency: req.body.vigency,
     specialty: req.body.specialty,
     pendingAppo: req.body.pendingAppo,

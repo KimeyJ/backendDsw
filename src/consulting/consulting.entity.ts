@@ -19,6 +19,9 @@ export class Consulting extends BaseEntity {
   @Property({ nullable: false })
   street_number!: number;
 
+  @Property({ nullable: false, default: true })
+  vigency!: boolean;
+
   @OneToMany(
     () => Doctor_consulting,
     (doctor_consulting) => doctor_consulting.consulting,

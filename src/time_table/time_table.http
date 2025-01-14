@@ -7,8 +7,8 @@ POST http://localhost:3000/api/time_tables
 Content-Type: application/json
 
 {
-    "dayTime": "Mondays, 16:00",
-    "vigDate": "04-12-2023",
+    "consultationTime": "16:00",
+    "vigency": true,
     "doctor_consulting": 2
 }
 

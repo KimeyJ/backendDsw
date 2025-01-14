@@ -7,16 +7,13 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { Entity, Property, ManyToOne, OneToMany, Cascade, Collection } from '@mikro-orm/core';
+import { Entity, Property, ManyToOne, OneToMany, Cascade, Collection, } from '@mikro-orm/core';
 import { BaseEntity } from '../shared/baseEntity.entity.js';
 import { Specialty } from '../specialty/specialty.entity.js';
 import { Doctor_consulting } from '../doctor_consulting/doctor_consulting.entity.js';
 let Doctor = class Doctor extends BaseEntity {
     constructor() {
         super(...arguments);
-        /*@OneToMany(() => Appointment, (appointment) => appointment.doctor, {
-        cascade: [Cascade.ALL],})
-        pendingAppo = new Collection<Appointment>(this);*/
         this.consultings = new Collection(this);
     }
 };
@@ -44,6 +41,14 @@ __decorate([
     Property({ nullable: false, unique: true }),
     __metadata("design:type", Number)
 ], Doctor.prototype, "tuition_number", void 0);
+__decorate([
+    Property({ nullable: false }),
+    __metadata("design:type", Number)
+], Doctor.prototype, "codUser", void 0);
+__decorate([
+    Property({ nullable: false, default: true }),
+    __metadata("design:type", Boolean)
+], Doctor.prototype, "vigency", void 0);
 __decorate([
     ManyToOne(() => Specialty, { nullable: false }),
     __metadata("design:type", Object)
