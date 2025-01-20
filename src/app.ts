@@ -44,3 +44,6 @@ await syncSchema();
 app.listen(3000, () => {
   console.log('Server is running on port 3000');
 });
+
+
+//ANDRIU DECIME Y TE PASO LA CLAVE DEL CAPTCHA
