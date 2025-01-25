@@ -9,7 +9,6 @@ import {
 } from '@mikro-orm/core';
 import { BaseEntity } from '../shared/baseEntity.entity.js';
 import { Specialty } from '../specialty/specialty.entity.js';
-import { Appointment } from '../appointment/appointment.entity.js';
 import { Doctor_consulting } from '../doctor_consulting/doctor_consulting.entity.js';
 
 @Entity()

@@ -2,16 +2,15 @@ import {
   Entity,
   Property,
   Collection,
-  ManyToMany,
-  Rel,
   OneToMany,
   Cascade,
+  Unique,
 } from '@mikro-orm/core';
 import { BaseEntity } from '../shared/baseEntity.entity.js';
-import { Doctor } from '../doctor/doctor.entity.js';
 import { Doctor_consulting } from '../doctor_consulting/doctor_consulting.entity.js';
 
 @Entity()
+@Unique({properties: ['street','street_number']})
 export class Consulting extends BaseEntity {
   @Property({ nullable: false })
   street!: string;

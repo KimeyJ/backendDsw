@@ -1,7 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { Treatment } from './treatment.entity.js';
 import { orm } from '../shared/orm.js';
-import { Follow_up } from '../follow_up/follow_up.entity.js';
 
 const em = orm.em;
 

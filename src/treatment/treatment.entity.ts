@@ -4,9 +4,7 @@ import {
   Entity,
   Property,
   OneToMany,
-  ManyToMany,
 } from '@mikro-orm/core';
-import { Follow_up } from '../follow_up/follow_up.entity.js';
 import { BaseEntity } from '../shared/baseEntity.entity.js';
 import { Followup_treatment } from '../followup_treatment/followup_treatment.entity.js';
 

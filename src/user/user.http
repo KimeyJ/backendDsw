@@ -48,13 +48,15 @@ POST http://localhost:3000/api/users
 Content-Type: application/json
 
 {
-    "dni": "admin2",
-    "firstName": "Ernesto",
-    "lastName": "Rodriguez",
-    "email": "ERodriguez@gmail.com",
-    "password": "123456",
-    "age":30,
-    "codUser": 0
+    "user": {
+        "dni": "admin2",
+        "firstName": "Ernesto",
+        "lastName": "Rodriguez",
+        "email": "ERodriguez@gmail.com",
+        "password": "123456",
+        "age":30,
+        "codUser": 0
+    }
 }
 
 ### Login check
@@ -62,6 +64,8 @@ POST http://localhost:3000/api/users/login
 Content-Type: application/json
 
 {
-    "dni": "admin2",
-    "password": "123456"
+    "user": {
+        "dni": "admin2",
+        "password": "123456"
+    }
 }

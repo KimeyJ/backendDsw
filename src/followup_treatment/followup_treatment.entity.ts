@@ -1,11 +1,7 @@
 import {
   Entity,
-  Property,
-  ManyToMany,
-  Cascade,
   ManyToOne,
   Rel,
-  Collection,
 } from '@mikro-orm/core';
 import { Follow_up } from '../follow_up/follow_up.entity.js';
 import { Treatment } from '../treatment/treatment.entity.js';
