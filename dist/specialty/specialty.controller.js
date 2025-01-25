@@ -5,8 +5,8 @@ function sanitizeSpecialtyInput(req, res, next) {
     req.body.sanitizedInput = {
         id: req.body.id,
         name: req.body.name,
+        vigency: req.body.vigency,
         doctors: req.body.doctors,
-        price: req.body.price,
     };
     Object.keys(req.body.sanitizedInput).forEach((key) => {
         if (req.body.sanitizedInput[key] === undefined) {
@@ -31,7 +31,7 @@ async function findAll(req, res) {
 async function findOne(req, res) {
     try {
         const id = Number.parseInt(req.params.id);
-        const speacialty = await em.find(Specialty, { id });
+        const speacialty = await em.find(Specialty, { id }, { populate: ['doctors'] });
         res.status(200).json({ message: 'Found speacialty', data: speacialty });
     }
     catch (error) {

@@ -1,22 +1,23 @@
 import { Doctor } from './doctor.entity.js';
 import { orm } from '../shared/orm.js';
-import { Specialty } from '../specialty/specialty.entity.js';
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 const em = orm.em;
 function sanitizeDoctorInput(req, res, next) {
     req.body.sanitizedInput = {
         id: req.body.id,
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        email: req.body.email,
-        password: req.body.password,
-        age: req.body.age,
-        tuition_number: req.body.tuition_number,
-        codUser: req.body.codUser,
-        vigency: req.body.vigency,
-        specialty: req.body.specialty,
-        pendingAppo: req.body.pendingAppo,
-        consultings: req.body.consultings,
-        specialtyToSearch: req.body.specialtyToSearch,
+        firstName: req.body.doctor.firstName,
+        lastName: req.body.doctor.lastName,
+        email: req.body.doctor.email,
+        password: req.body.doctor.password,
+        age: req.body.doctor.age,
+        tuition_number: req.body.doctor.tuition_number,
+        codUser: req.body.doctor.codUser,
+        vigency: req.body.doctor.vigency,
+        specialty: req.body.doctor.specialty,
+        pendingAppo: req.body.doctor.pendingAppo,
+        consultings: req.body.doctor.consultings,
+        specialtyToSearch: req.body.doctor.specialtyToSearch,
     };
     Object.keys(req.body.sanitizedInput).forEach((key) => {
         if (req.body.sanitizedInput[key] === undefined) {
@@ -27,20 +28,8 @@ function sanitizeDoctorInput(req, res, next) {
 }
 async function findAll(req, res) {
     try {
-        if (req.body.specialtyToSearch !== undefined) {
-            const specialtyToSearch = req.body.specialtyToSearch;
-            const specialty = await em.find(Specialty, { name: specialtyToSearch });
-            const id = specialty[0].id;
-            const doctors = await em.find(Doctor, { specialty: id }, { populate: ['specialty'] });
-            res.status(200).json({
-                message: 'Found all doctors with the specified specialty',
-                data: doctors,
-            });
-        }
-        else {
-            const doctors = await em.find(Doctor, {}, { populate: ['specialty'] });
-            res.status(200).json({ message: 'Found all doctors', data: doctors });
-        }
+        const doctors = await em.find(Doctor, {}, { populate: ['specialty'] });
+        res.status(200).json({ message: 'Found all doctors', data: doctors });
     }
     catch (error) {
         res.status(500).json({ message: error.message });
@@ -49,7 +38,7 @@ async function findAll(req, res) {
 async function findOne(req, res) {
     try {
         const id = Number.parseInt(req.params.id);
-        const doctor = await em.findOneOrFail(Doctor, { id }, { populate: ['specialty'] });
+        const doctor = await em.findOneOrFail(Doctor, { id }, { populate: ['specialty', 'consultings'] });
         res.status(200).json({ message: 'Found doctor', data: doctor });
     }
     catch (error) {
@@ -58,6 +47,9 @@ async function findOne(req, res) {
 }
 async function add(req, res) {
     try {
+        const password = req.body.sanitizedInput.password;
+        const hashedPassword = await bcrypt.hash(password, 10);
+        req.body.sanitizedInput.password = hashedPassword;
         const doctor = em.create(Doctor, req.body.sanitizedInput);
         await em.flush();
         res.status(201).json({ message: 'Doctor created', data: doctor });
@@ -91,5 +83,33 @@ async function remove(req, res) {
         res.status(500).json({ message: error.message });
     }
 }
-export { sanitizeDoctorInput, findAll, findOne, add, update, remove };
+async function loginDoctor(req, res) {
+    try {
+        const tuition_number = req.body.doctor.tuition_number;
+        const password = req.body.doctor.password;
+        const doctors = await em.find(Doctor, { tuition_number: tuition_number });
+        if (doctors[0] === undefined) {
+            return res.status(400).json({ message: 'Usuario no registrado' });
+        }
+        //res.json({ users });
+        const doctor = doctors[0];
+        const passwordCheck = await bcrypt.compare(password, doctor.password);
+        if (!passwordCheck) {
+            return res.status(400).json({ message: 'La contraseña no es correcta' });
+        }
+        //const codUser = user.cod_user as Number;
+        const token = jwt.sign({
+            id: doctor.id,
+            firstName: doctor.firstName,
+            lastName: doctor.lastName,
+            tuition_number: tuition_number,
+            codUser: doctor.codUser,
+        }, process.env.SECRET_KEY || 'YoHeBaiteadoConCocodrilos');
+        res.json({ token });
+    }
+    catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+export { sanitizeDoctorInput, findAll, findOne, add, update, remove, loginDoctor };
 //# sourceMappingURL=doctor.controller.js.map

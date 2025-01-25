@@ -14,8 +14,7 @@ import { Doctor_consulting } from '../doctor_consulting/doctor_consulting.entity
 
 @Entity()
 export class Doctor extends BaseEntity {
-  @Property({ nullable: false, unique: true })
-  dni!: string;
+
 
   @Property({ nullable: false })
   firstName!: string;

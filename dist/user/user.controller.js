@@ -5,18 +5,18 @@ import jwt from 'jsonwebtoken';
 const em = orm.em;
 function sanitizeUserInput(req, res, next) {
     req.body.sanitizedInput = {
-        id: req.body.id,
-        dni: req.body.dni,
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        email: req.body.email,
-        password: req.body.password,
-        age: req.body.age,
-        tuition_number: req.body.tuition_number,
-        codUser: req.body.codUser,
-        specialty: req.body.specialty,
-        follow_up: req.body.follow_up,
-        specialtyToSearch: req.body.specialtyToSearch,
+        id: req.body.user.id,
+        dni: req.body.user.dni,
+        firstName: req.body.user.firstName,
+        lastName: req.body.user.lastName,
+        email: req.body.user.email,
+        password: req.body.user.password,
+        age: req.body.user.age,
+        tuition_number: req.body.user.tuition_number,
+        codUser: req.body.user.codUser,
+        specialty: req.body.user.specialty,
+        follow_up: req.body.user.follow_up,
+        specialtyToSearch: req.body.user.specialtyToSearch,
     };
     Object.keys(req.body.sanitizedInput).forEach((key) => {
         if (req.body.sanitizedInput[key] === undefined) {
@@ -84,8 +84,8 @@ async function remove(req, res) {
 }
 async function loginUser(req, res) {
     try {
-        const dni = req.body.dni;
-        const password = req.body.password;
+        const dni = req.body.user.dni;
+        const password = req.body.user.password;
         const users = await em.find(User, { dni: dni });
         if (users[0] === undefined) {
             return res.status(400).json({ message: 'Usuario no registrado' });

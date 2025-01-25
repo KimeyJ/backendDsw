@@ -9,19 +9,18 @@ const em = orm.em;
 function sanitizeDoctorInput(req: Request, res: Response, next: NextFunction) {
   req.body.sanitizedInput = {
     id: req.body.id,
-    dni: req.body.dni,
-    firstName: req.body.firstName,
-    lastName: req.body.lastName,
-    email: req.body.email,
-    password: req.body.password,
-    age: req.body.age,
-    tuition_number: req.body.tuition_number,
-    codUser: req.body.codUser,
-    vigency: req.body.vigency,
-    specialty: req.body.specialty,
-    pendingAppo: req.body.pendingAppo,
-    consultings: req.body.consultings,
-    specialtyToSearch: req.body.specialtyToSearch,
+    firstName: req.body.doctor.firstName,
+    lastName: req.body.doctor.lastName,
+    email: req.body.doctor.email,
+    password: req.body.doctor.password,
+    age: req.body.doctor.age,
+    tuition_number: req.body.doctor.tuition_number,
+    codUser: req.body.doctor.codUser,
+    vigency: req.body.doctor.vigency,
+    specialty: req.body.doctor.specialty,
+    pendingAppo: req.body.doctor.pendingAppo,
+    consultings: req.body.doctor.consultings,
+    specialtyToSearch: req.body.doctor.specialtyToSearch,
   };
 
   Object.keys(req.body.sanitizedInput).forEach((key) => {
@@ -48,7 +47,7 @@ async function findOne(req: Request, res: Response) {
     const doctor = await em.findOneOrFail(
       Doctor,
       { id },
-      { populate: ['specialty'] }
+      { populate: ['specialty','consultings'] }
     );
     res.status(200).json({ message: 'Found doctor', data: doctor });
   } catch (error: any) {
@@ -96,9 +95,9 @@ async function remove(req: Request, res: Response) {
 
 async function loginDoctor(req: Request, res: Response) {
   try {
-    const dni = req.body.dni as string;
-    const password = req.body.password;
-    const doctors = await em.find(Doctor, {dni: dni });
+    const tuition_number = req.body.doctor.tuition_number;
+    const password = req.body.doctor.password;
+    const doctors = await em.find(Doctor, {tuition_number: tuition_number});
     if (doctors[0] === undefined) {
       return res.status(400).json({ message: 'Usuario no registrado' });
     }
@@ -114,7 +113,7 @@ async function loginDoctor(req: Request, res: Response) {
         id: doctor.id,
         firstName: doctor.firstName,
         lastName: doctor.lastName,
-        dni: dni,
+        tuition_number: tuition_number,
         codUser: doctor.codUser,
       },
       process.env.SECRET_KEY || 'YoHeBaiteadoConCocodrilos'

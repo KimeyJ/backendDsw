@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 
+
 export const validateCaptcha = (
   req: Request,
   res: Response,
@@ -7,9 +8,10 @@ export const validateCaptcha = (
 ) => {
   try {
     const params = new URLSearchParams({
-      secret: 'ANDRIU DECIME Y TE LA PASO',
-      response: req.body['g-recaptcha-responsse'],
+      secret: '',
+      response: req.body.captcha,
     });
+    //console.log(params);
     fetch('https://www.google.com/recaptcha/api/siteverify', {
       method: 'POST',
       body: params,
@@ -19,12 +21,10 @@ export const validateCaptcha = (
         if (data.success) {
           next();
         } else {
-          throw new Error('Captcha is not valid');
+          res.status(500).json({message: 'El Captcha no es valido'})
         }
       });
-  } catch (error) {
-    res.status(401).json({
-      message: 'Captcha is not valid',
-    });
+  } catch (error: any) {
+    res.status(500).json({ message: error.message });
   }
 };
