@@ -7,19 +7,14 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { Entity, Property, Collection, ManyToOne, OneToMany, Cascade, } from '@mikro-orm/core';
+import { Entity, Property, ManyToOne, } from '@mikro-orm/core';
 import { BaseEntity } from '../shared/baseEntity.entity.js';
 import { Consulting } from '../consulting/consulting.entity.js';
-import { Time_table } from '../time_table/time_table.entity.js';
 import { Doctor } from '../doctor/doctor.entity.js';
 let Doctor_consulting = class Doctor_consulting extends BaseEntity {
-    constructor() {
-        super(...arguments);
-        this.time_tables = new Collection(this);
-    }
 };
 __decorate([
-    Property()
+    Property({ nullable: false, default: true })
     //True -> el doctor sigue atendiendo en ese consultorio
     //False -> el doctor no sigue atendiendo en ese consultorio
     ,
@@ -33,12 +28,6 @@ __decorate([
     ManyToOne(() => Consulting, { nullable: false }),
     __metadata("design:type", Object)
 ], Doctor_consulting.prototype, "consulting", void 0);
-__decorate([
-    OneToMany(() => Time_table, (time_table) => time_table.doctor_consulting, {
-        cascade: [Cascade.ALL],
-    }),
-    __metadata("design:type", Object)
-], Doctor_consulting.prototype, "time_tables", void 0);
 Doctor_consulting = __decorate([
     Entity()
 ], Doctor_consulting);

@@ -1,7 +1,7 @@
 export const validateCaptcha = (req, res, next) => {
     try {
         const params = new URLSearchParams({
-            secret: '',
+            secret: '6Lclx78qAAAAADP-l8T0w-jgy-ZZYgkB3N2PTkxS',
             response: req.body.captcha,
         });
         //console.log(params);

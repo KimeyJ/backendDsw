@@ -14,7 +14,7 @@ import { Doctor } from '../doctor/doctor.entity.js';
 
 @Entity()
 export class Doctor_consulting extends BaseEntity {
-  @Property()
+  @Property({ nullable: false, default: true })
   //True -> el doctor sigue atendiendo en ese consultorio
   //False -> el doctor no sigue atendiendo en ese consultorio
   vigency!: boolean;
@@ -23,8 +23,4 @@ export class Doctor_consulting extends BaseEntity {
   doctor!: Rel<Doctor>;
   @ManyToOne(() => Consulting, { nullable: false })
   consulting!: Rel<Consulting>;
-  @OneToMany(() => Time_table, (time_table) => time_table.doctor_consulting, {
-    cascade: [Cascade.ALL],
-  })
-  time_tables = new Collection<Time_table>(this);
 }

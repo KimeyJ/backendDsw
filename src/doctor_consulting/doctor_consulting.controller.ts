@@ -3,6 +3,7 @@ import { Doctor_consulting } from './doctor_consulting.entity.js';
 import { orm } from '../shared/orm.js';
 import { Specialty } from '../specialty/specialty.entity.js';
 import { PopulateHint } from '@mikro-orm/core';
+import { wrap } from '@mikro-orm/core';
 
 const em = orm.em;
 
@@ -14,10 +15,8 @@ function sanitizeDoctorConsultingInput(
   req.body.sanitizedInput = {
     id: req.body.id,
     vigency: req.body.vigency,
-    doctor: req.body.doctor,
-    consulting: req.body.consulting,
-    time_tables: req.body.time_tables,
-    specialtyToSearch: req.body.specialtyToSearch,
+    doctor: req.body.doctor.id,
+    consulting: req.body.consulting.id,
   };
 
   Object.keys(req.body.sanitizedInput).forEach((key) => {
@@ -86,7 +85,7 @@ async function update(req: Request, res: Response) {
     const DoctorConsultingToUpdate = await em.findOneOrFail(Doctor_consulting, {
       id,
     });
-    em.assign(DoctorConsultingToUpdate, req.body.sanitizedInput);
+    em.assign(DoctorConsultingToUpdate,req.body.sanitizedInput);
     await em.flush();
     res.status(200).json({
       message: 'Doctor consulting updated',
