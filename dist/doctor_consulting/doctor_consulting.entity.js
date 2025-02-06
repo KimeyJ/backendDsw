@@ -7,7 +7,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { Entity, Property, ManyToOne, } from '@mikro-orm/core';
+import { Entity, Property, ManyToOne, Unique, } from '@mikro-orm/core';
 import { BaseEntity } from '../shared/baseEntity.entity.js';
 import { Consulting } from '../consulting/consulting.entity.js';
 import { Doctor } from '../doctor/doctor.entity.js';
@@ -29,7 +29,8 @@ __decorate([
     __metadata("design:type", Object)
 ], Doctor_consulting.prototype, "consulting", void 0);
 Doctor_consulting = __decorate([
-    Entity()
+    Entity(),
+    Unique({ properties: ['doctor', 'consulting'] })
 ], Doctor_consulting);
 export { Doctor_consulting };
 //# sourceMappingURL=doctor_consulting.entity.js.map

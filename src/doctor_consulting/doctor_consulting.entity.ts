@@ -6,6 +6,7 @@ import {
   Rel,
   OneToMany,
   Cascade,
+  Unique,
 } from '@mikro-orm/core';
 import { BaseEntity } from '../shared/baseEntity.entity.js';
 import { Consulting } from '../consulting/consulting.entity.js';
@@ -13,6 +14,7 @@ import { Time_table } from '../time_table/time_table.entity.js';
 import { Doctor } from '../doctor/doctor.entity.js';
 
 @Entity()
+@Unique({properties: ['doctor','consulting']})
 export class Doctor_consulting extends BaseEntity {
   @Property({ nullable: false, default: true })
   //True -> el doctor sigue atendiendo en ese consultorio
