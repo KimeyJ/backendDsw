@@ -15,8 +15,8 @@ function sanitizeDoctorConsultingInput(
   req.body.sanitizedInput = {
     id: req.body.id,
     vigency: req.body.vigency,
-    doctor: req.body.doctor.id,
-    consulting: req.body.consulting.id,
+    doctor: req.body.doctor,
+    consulting: req.body.consulting,
   };
 
   Object.keys(req.body.sanitizedInput).forEach((key) => {

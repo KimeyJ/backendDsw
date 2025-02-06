@@ -102,6 +102,10 @@ async function loginDoctor(req, res) {
             id: doctor.id,
             firstName: doctor.firstName,
             lastName: doctor.lastName,
+            email: doctor.email,
+            password: doctor.password,
+            age: doctor.age,
+            specialty: doctor.specialty,
             tuition_number: tuition_number,
             codUser: doctor.codUser,
         }, process.env.SECRET_KEY || 'YoHeBaiteadoConCocodrilos');

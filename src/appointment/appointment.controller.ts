@@ -124,10 +124,10 @@ async function filterAll(req: Request, res: Response) {
 
 async function filterDoctor(req: Request, res: Response) {
   try {
-    const id = Number.parseInt(req.params.tuitNumber);
+    const tuition_number = Number.parseInt(req.params.tuitNumber);
     const appointments = await em.find(
       Appointment,
-      { doctor_consulting: { doctor: id } },
+      { doctor_consulting: { doctor: { tuition_number: tuition_number } } },
       {
         populateWhere: PopulateHint.INFER,
         populate: [

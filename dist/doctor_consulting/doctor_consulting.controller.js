@@ -7,8 +7,8 @@ function sanitizeDoctorConsultingInput(req, res, next) {
     req.body.sanitizedInput = {
         id: req.body.id,
         vigency: req.body.vigency,
-        doctor: req.body.doctor.id,
-        consulting: req.body.consulting.id,
+        doctor: req.body.doctor,
+        consulting: req.body.consulting,
     };
     Object.keys(req.body.sanitizedInput).forEach((key) => {
         if (req.body.sanitizedInput[key] === undefined) {
@@ -63,12 +63,7 @@ async function update(req, res) {
         const DoctorConsultingToUpdate = await em.findOneOrFail(Doctor_consulting, {
             id,
         });
-        //const DoctorConsultingToUpdate = em.getReference(Doctor_consulting,id);
-        //wrap(DoctorConsultingToUpdate).assign(DoctorConsultingToUpdate, req.body.sanitizedInput);
         em.assign(DoctorConsultingToUpdate, req.body.sanitizedInput);
-        console.log(DoctorConsultingToUpdate);
-        console.log("----------------------------------");
-        console.log(req.body.sanitizedInput);
         await em.flush();
         res.status(200).json({
             message: 'Doctor consulting updated',
