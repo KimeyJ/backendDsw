@@ -13,7 +13,6 @@ function sanitizeSpecialtyInput(
     id: req.body.id,
     name: req.body.name,
     vigency: req.body.vigency,
-    doctors: req.body.doctors,
   };
 
   Object.keys(req.body.sanitizedInput).forEach((key) => {

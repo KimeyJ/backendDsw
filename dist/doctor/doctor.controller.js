@@ -16,7 +16,6 @@ function sanitizeDoctorInput(req, res, next) {
         vigency: req.body.doctor.vigency,
         specialty: req.body.doctor.specialty,
         pendingAppo: req.body.doctor.pendingAppo,
-        consultings: req.body.doctor.consultings,
         specialtyToSearch: req.body.doctor.specialtyToSearch,
     };
     Object.keys(req.body.sanitizedInput).forEach((key) => {
@@ -91,13 +90,11 @@ async function loginDoctor(req, res) {
         if (doctors[0] === undefined) {
             return res.status(400).json({ message: 'Usuario no registrado' });
         }
-        //res.json({ users });
         const doctor = doctors[0];
         const passwordCheck = await bcrypt.compare(password, doctor.password);
         if (!passwordCheck) {
             return res.status(400).json({ message: 'La contraseña no es correcta' });
         }
-        //const codUser = user.cod_user as Number;
         const token = jwt.sign({
             id: doctor.id,
             firstName: doctor.firstName,

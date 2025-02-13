@@ -12,11 +12,7 @@ function sanitizeUserInput(req, res, next) {
         email: req.body.user.email,
         password: req.body.user.password,
         age: req.body.user.age,
-        tuition_number: req.body.user.tuition_number,
         codUser: req.body.user.codUser,
-        specialty: req.body.user.specialty,
-        follow_up: req.body.user.follow_up,
-        specialtyToSearch: req.body.user.specialtyToSearch,
     };
     Object.keys(req.body.sanitizedInput).forEach((key) => {
         if (req.body.sanitizedInput[key] === undefined) {
@@ -90,13 +86,11 @@ async function loginUser(req, res) {
         if (users[0] === undefined) {
             return res.status(400).json({ message: 'Usuario no registrado' });
         }
-        //res.json({ users });
         const user = users[0];
         const passwordCheck = await bcrypt.compare(password, user.password);
         if (!passwordCheck) {
             return res.status(400).json({ message: 'La contraseña no es correcta' });
         }
-        //const codUser = user.cod_user as Number;
         const token = jwt.sign({ id: user.id, firstName: user.firstName, lastName: user.lastName,
             email: user.email, password: user.password, age: user.age, dni: dni, codUser: user.codUser }, process.env.SECRET_KEY || 'YoHeBaiteadoConCocodrilos');
         res.json({ token });

@@ -23,7 +23,7 @@ __decorate([
 ], Appointment.prototype, "appoTime", void 0);
 __decorate([
     Property({ nullable: true, unique: false }),
-    __metadata("design:type", Boolean)
+    __metadata("design:type", String)
 ], Appointment.prototype, "assisted", void 0);
 __decorate([
     ManyToOne(() => Doctor_consulting, { nullable: false }),

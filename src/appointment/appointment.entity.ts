@@ -10,7 +10,7 @@ export class Appointment extends BaseEntity {
   @Property({type:'time', nullable: false, unique: false })
   appoTime!: String;
   @Property({ nullable: true, unique: false })
-  assisted!: boolean;
+  assisted!: String;
   @ManyToOne(() => Doctor_consulting, { nullable: false })
   doctor_consulting!: Rel<Doctor_consulting>;
   @ManyToOne(() => User, { nullable: false })

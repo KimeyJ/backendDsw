@@ -8,7 +8,7 @@ export const validateCaptcha = (
 ) => {
   try {
     const params = new URLSearchParams({
-      secret: '6Lclx78qAAAAADP-l8T0w-jgy-ZZYgkB3N2PTkxS',
+      secret: '',//Ingresar secret key de recaptcha
       response: req.body.captcha,
     });
     //console.log(params);

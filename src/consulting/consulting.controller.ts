@@ -13,7 +13,6 @@ function sanitizeConsultingInput(
     id: req.body.id,
     street: req.body.street,
     street_number: req.body.street_number,
-    doctors: req.body.doctors,
     vigency: req.body.vigency,
   };
 

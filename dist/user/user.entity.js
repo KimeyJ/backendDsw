@@ -9,12 +9,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { Entity, Property, Cascade, OneToMany, Collection, } from '@mikro-orm/core';
 import { BaseEntity } from '../shared/baseEntity.entity.js';
-import { Follow_up } from '../follow_up/follow_up.entity.js';
 import { Appointment } from '../appointment/appointment.entity.js';
 let User = class User extends BaseEntity {
     constructor() {
         super(...arguments);
-        this.follow_up = new Collection(this);
         this.appos = new Collection(this);
     }
 };
@@ -46,12 +44,6 @@ __decorate([
     Property({ nullable: false }),
     __metadata("design:type", Number)
 ], User.prototype, "codUser", void 0);
-__decorate([
-    OneToMany(() => Follow_up, (follow_up) => follow_up.patient, {
-        cascade: [Cascade.ALL],
-    }),
-    __metadata("design:type", Object)
-], User.prototype, "follow_up", void 0);
 __decorate([
     OneToMany(() => Appointment, (appointment) => appointment.patient, {
         cascade: [Cascade.ALL],

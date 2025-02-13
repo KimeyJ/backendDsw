@@ -6,7 +6,6 @@ function sanitizeSpecialtyInput(req, res, next) {
         id: req.body.id,
         name: req.body.name,
         vigency: req.body.vigency,
-        doctors: req.body.doctors,
     };
     Object.keys(req.body.sanitizedInput).forEach((key) => {
         if (req.body.sanitizedInput[key] === undefined) {

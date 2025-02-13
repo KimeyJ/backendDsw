@@ -14,7 +14,7 @@ export const validateTokenUser = (req, res, next) => {
         }
         catch (error) {
             res.status(401).json({
-                message: 'Access Denied boludon',
+                message: 'Access Denied',
             });
         }
     }
